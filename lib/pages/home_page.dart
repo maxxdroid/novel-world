@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:novel_world/functions/caching_service.dart';
 import 'package:novel_world/novelbin/novelbin_service.dart';
 import 'package:novel_world/pages/novelbin_deails.dart';
 import '../model/novel.dart';
@@ -23,6 +24,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     fetchNovels(page);
 
+    CachingService().saveNovelBinHomeNovels(allNovels);
+
     _scrollController.addListener(() {
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent && !isLoading) {
         _onEndReached();
@@ -31,12 +34,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   void fetchNovels(int page) {
-    NovelBinService().getAllHotNovels(page).then((newNovels) {
-      setState(() {
-        allNovels.addAll(newNovels);
-        novels = Future.value(allNovels);
+    try {
+      NovelBinService().getAllHotNovels(page).then((newNovels) {
+        setState(() {
+          allNovels.addAll(newNovels);
+          novels = Future.value(allNovels);
+        });
       });
-    });
+    } catch (e) {
+      getCachedNovels();
+    }
+  }
+  void getCachedNovels() async {
+    allNovels = await CachingService().getNovelBinHomeNovels();
   }
 
   void _onEndReached() {
