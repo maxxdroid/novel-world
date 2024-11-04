@@ -21,7 +21,7 @@ class _NovelBinDetailsState extends State<NovelBinDetails> {
   late WebViewController controller;
   bool loading = true;
   bool isDescriptionExpanded = false; // For toggling description
-  bool ascending = false;
+  bool ascending = false; // For toggling sorting
   Novel? updatedNovel;
   late Future<Novel?> novel;
   late Color color;
@@ -104,7 +104,7 @@ class _NovelBinDetailsState extends State<NovelBinDetails> {
                             if (snapshot.hasError) {
                               return const SizedBox();
                             } else if (snapshot.hasData) {
-                              Color c = snapshot.data!.lightMutedColor!.color;
+                              Color c = snapshot.data!.lightMutedColor?.color != null ? snapshot.data!.lightMutedColor!.color: Colors.white10;
                               color = c;
                               return Container(
                                 color: c,

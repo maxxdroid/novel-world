@@ -9,6 +9,7 @@ class CachingService {
   Future<void>  saveNovelBinHomeNovels (List<Novel> novels) async {
     final prefs = await SharedPreferences.getInstance();
     final novelList = novels.map((novel) => jsonEncode(novel.toJson())).toList();
+    print("................${novelList}");
     await prefs.setStringList("novelBin", novelList);
   }
 

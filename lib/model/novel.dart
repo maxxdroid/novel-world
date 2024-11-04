@@ -31,8 +31,8 @@ class Novel {
     return Novel(
         title: json["title"],
         link: json["link"],
-        chapters: (json["chapters"] as List<dynamic>)
-            .map((item) => Chapter.fromJson(item as Map<String, dynamic>)).toList(),
+        chapters: (json["chapters"] as List<dynamic>?)
+            ?.map((item) => Chapter.fromJson(item as Map<String, dynamic>)).toList(),
         imgUrl: json["imgUrl"],
         author: json["author"]
     );
@@ -45,5 +45,22 @@ class Novel {
       "author" : author,
       "chapters" : chapters?.map((chap) => chap.toJson()).toList(),
     };
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if(identical(this, other)) return true;
+
+    return other is Novel &&
+    other.title == title &&
+    other.imgUrl == imgUrl &&
+    other.link == link;
+  }
+
+  @override
+  int get hashCode {
+    return title.hashCode ^
+    imgUrl.hashCode ^
+    link.hashCode;
   }
 }
