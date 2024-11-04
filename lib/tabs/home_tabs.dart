@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:novel_world/pages/home_page.dart';
+import 'package:novel_world/tabs/source_tab.dart';
 
 class HomeTabs extends StatefulWidget {
   const HomeTabs({super.key});
@@ -40,9 +41,9 @@ class _HomeTabsState extends State<HomeTabs> {
                 pageIndex = index;
               });
             },
-            children: const [
+            children:  const [
               HomePage(),
-              Text("Hola"),
+              SourceTabs(),
               Text("Hola"),
               Text("Hola")
             ],
@@ -51,6 +52,7 @@ class _HomeTabsState extends State<HomeTabs> {
             selectedLabelStyle:
             const TextStyle(fontSize: 10, color: Colors.black, fontWeight: FontWeight.bold),
             showUnselectedLabels: false,
+            showSelectedLabels: false,
             selectedIconTheme:
             const IconThemeData(size: 25, color: Colors.blue),
             backgroundColor: Colors.transparent,
@@ -67,9 +69,11 @@ class _HomeTabsState extends State<HomeTabs> {
               BottomNavigationBarItem(
                   icon: pageIndex == 0 ? const ImageIcon(
                     AssetImage("assets/images/open-book.png"),
+                    size: 30,
                     color: Colors.black,
                   ) : const ImageIcon(
                     AssetImage("assets/images/book.png"),
+                    size: 20,
                     color: Colors.black,
                   ),
                 label: "My Library"
@@ -77,9 +81,11 @@ class _HomeTabsState extends State<HomeTabs> {
                BottomNavigationBarItem(
                   icon: pageIndex == 1 ? const ImageIcon(
                     AssetImage("assets/images/compass.png"),
+                    size: 30,
                     color: Colors.black,
                   ) : const ImageIcon(
                     AssetImage("assets/images/compass-circular-tool.png"),
+                    size: 20,
                     color: Colors.black,
                   ),
                   label: "Sources"
@@ -87,10 +93,11 @@ class _HomeTabsState extends State<HomeTabs> {
               BottomNavigationBarItem(
                   icon: pageIndex == 2 ? const ImageIcon(
                     AssetImage("assets/images/history.png"),
+                    size: 30,
                     color: Colors.black,
                   ) : const ImageIcon(
                     AssetImage("assets/images/restore.png"),
-                    size: 30,
+                    size: 25,
                     color: Colors.black,
                   ),
                   label: "History"
