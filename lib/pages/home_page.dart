@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:novel_world/functions/caching_service.dart';
+import 'package:novel_world/loading_states/loading_home.dart';
 import 'package:novel_world/novelbin/novelbin_service.dart';
 import 'package:novel_world/pages/novelbin_deails.dart';
 
@@ -98,7 +99,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             child: isInitialLoading
-                ? const Center(child: CircularProgressIndicator()) // Initial loading indicator
+                ? const LoadingHome()// Initial loading indicator
                 : GridView.builder(
                     controller: _scrollController,
                     padding: const EdgeInsets.symmetric(horizontal: 10),

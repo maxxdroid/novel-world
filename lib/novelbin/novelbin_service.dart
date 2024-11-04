@@ -292,7 +292,7 @@ class NovelBinService {
         novel.yearOfPublication = yearOfPublishing;
 
         for (Element chapter in chapters) {
-          String chapterTitle = chapter.text;
+          String chapterTitle = chapter.text.trim();
           String chapterLink = chapter.attributes['href'] ?? '';
 
           // Add to list of chapters

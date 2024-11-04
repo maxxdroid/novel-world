@@ -53,6 +53,7 @@ class _ChapterDetailsState extends State<ChapterDetails> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      drawer: const SizedBox(),
       body: NotificationListener<ScrollNotification>(
         onNotification: (notification) {
           _onScroll(notification);
@@ -116,7 +117,8 @@ class _ChapterDetailsState extends State<ChapterDetails> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+          IconButton(onPressed: () {
+          }, icon: const Icon(Icons.menu)),
           IconButton(
             onPressed: () {
               if (prev.isNotEmpty) {
