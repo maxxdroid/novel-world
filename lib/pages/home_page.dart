@@ -112,7 +112,23 @@ class _HomePageState extends State<HomePage> {
                     ),
                     itemBuilder: (context, index) {
                       if (index == allNovels.length) {
-                        return const Center(child: CircularProgressIndicator()); // Pagination loading indicator
+                        return Column(
+                          children: [
+                            Card(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              color: Colors.grey.shade50,
+                              child: const SizedBox(height: 160, width: 100,),
+                            ),
+                            Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.grey.shade50,
+                              ),
+                              height: 40,
+                            )
+                          ],
+                        );
                       }
 
                       final novel = allNovels[index];
@@ -123,9 +139,13 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.network(novel.imgUrl ?? "", height: 160, fit: BoxFit.cover),
+                            Card(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              color: Colors.grey.shade50,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(novel.imgUrl ?? "", height: 160, fit: BoxFit.cover),
+                              ),
                             ),
                             SizedBox(
                               width: 100,
