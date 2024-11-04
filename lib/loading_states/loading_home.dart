@@ -22,8 +22,11 @@ class LoadingHome extends StatelessWidget {
             ),
             Container(
               width: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.grey.shade50,
+              ),
               height: 20,
-              color: Colors.grey.shade50,
             )
           ],
         );
