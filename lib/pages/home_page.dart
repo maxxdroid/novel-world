@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:novel_world/functions/caching_service.dart';
 import 'package:novel_world/loading_states/loading_home.dart';
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     fetchNovels(page, isInitial: true);
 
     _scrollController.addListener(() {
@@ -90,7 +92,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         title: const Text("Novel World", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),

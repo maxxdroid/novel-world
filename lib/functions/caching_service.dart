@@ -19,4 +19,16 @@ class CachingService {
     return novelList.map((json) => Novel.fromJson(jsonDecode(json))).toList();
   }
 
+  Future<void>  saveToLibrary (List<Novel> novels) async {
+    final prefs = await SharedPreferences.getInstance();
+    final novelList = novels.map((novel) => jsonEncode(novel.toJson())).toList();
+    await prefs.setStringList("MyLibrary", novelList);
+  }
+
+  Future<List<Novel>> getLibraryNovels() async {
+    final prefs = await SharedPreferences.getInstance();
+    final novelList = prefs.getStringList('MyLibrary') ?? [];
+    return novelList.map((json) => Novel.fromJson(jsonDecode(json))).toList();
+  }
+
 }

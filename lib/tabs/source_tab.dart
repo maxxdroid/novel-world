@@ -15,15 +15,23 @@ class _SourceTabsState extends State<SourceTabs> {
       appBar: AppBar(
         title: const Text("Sources", style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
+        backgroundColor: Colors.white,
       ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Text("Last"),
             sourceWidget(width),
             sourceWidget(width),
+            const Text("Frequently Used"),
             sourceWidget(width),
-            sourceWidget(width)
+            sourceWidget(width),
+            const Text("Pinned"),
+            sourceWidget(width),
+            sourceWidget(width),
           ],
         ),
       ),

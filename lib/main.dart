@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:novel_world/tabs/home_tabs.dart';
 
 void main() {
   runApp(const MyApp());
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.transparent,
+    statusBarColor: Colors.transparent,
+  ));
 }
 
 class MyApp extends StatelessWidget {

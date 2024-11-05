@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:novel_world/pages/home_page.dart';
 import 'package:novel_world/tabs/source_tab.dart';
 
@@ -15,6 +16,11 @@ class _HomeTabsState extends State<HomeTabs> {
 
   @override
   void initState() {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.transparent,
+      statusBarColor: Colors.transparent,
+    ));
+
     super.initState();
     pageController = PageController(initialPage: pageIndex);
     pageController.addListener(() {
@@ -55,7 +61,7 @@ class _HomeTabsState extends State<HomeTabs> {
             showSelectedLabels: false,
             selectedIconTheme:
             const IconThemeData(size: 25, color: Colors.blue),
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.white,
             elevation: 0,
             currentIndex: pageIndex,
             type: BottomNavigationBarType.fixed,
