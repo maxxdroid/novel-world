@@ -17,7 +17,6 @@ class _MyLibraryState extends State<MyLibrary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Obx(() {
         if(libraryController.isLoading.value) {
           return const Center(
@@ -41,6 +40,9 @@ class _MyLibraryState extends State<MyLibrary> {
                   final novel = libraryController.novels[index];
                   return GestureDetector(
                     onTap: () {
+                      // if(novel.link == null) {
+                      //   print("Hola");
+                      // }
                       Get.to(() => NovelBinDetails(novel: novel));
                     },
                     child: Column(

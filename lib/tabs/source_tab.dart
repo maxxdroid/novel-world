@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:novel_world/pages/source_home.dart';
 
 class SourceTabs extends StatefulWidget {
   const SourceTabs({super.key});
@@ -41,7 +43,9 @@ class _SourceTabsState extends State<SourceTabs> {
   sourceWidget (double width) {
     return InkWell(
       borderRadius: BorderRadius.circular(10),
-      onTap: () {},
+      onTap: () {
+        Get.to(() => const SourceHome());
+      },
       child: Padding(
           padding: const EdgeInsets.all(10),
           child: SizedBox(

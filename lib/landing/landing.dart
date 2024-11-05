@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:novel_world/tabs/home_tabs.dart';
 
-import '../pages/home_page.dart';
+import '../pages/source_home.dart';
 
 class Landing extends StatefulWidget {
   const Landing({super.key});
@@ -23,7 +24,7 @@ class _LandingState extends State<Landing> {
 
   void displaySplash () {
     Timer(const Duration(seconds: 3), () {
-      Get.offAll(() => const HomePage());
+      Get.offAll(() => const HomeTabs());
     });
   }
 

@@ -8,14 +8,14 @@ import 'package:novel_world/pages/novelbin_deails.dart';
 
 import '../model/novel.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class SourceHome extends StatefulWidget {
+  const SourceHome({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<SourceHome> createState() => _SourceHomeState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _SourceHomeState extends State<SourceHome> {
   late Future<List<Novel>> novels;
   int page = 1;
   final ScrollController _scrollController = ScrollController();
