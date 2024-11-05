@@ -3,13 +3,21 @@ import 'package:novel_world/functions/caching_service.dart';
 import 'package:novel_world/model/novel.dart';
 
 class LibraryController extends GetxController {
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    fetchLibraryNovels();
+  }
+
   var novels = <Novel>[].obs;
-  var isLoading = false.obs;
+  var isLoading = true.obs;
 
   void fetchLibraryNovels() async {
     isLoading(true);
     try {
-      var libraryNovels = await CachingService().getLibraryNovels();
+      var libraryNovels = await CachingService().getNovelBinHomeNovels();
       novels.assignAll(libraryNovels);
     } finally {
       isLoading(false);

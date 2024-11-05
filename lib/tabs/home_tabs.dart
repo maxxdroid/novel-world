@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:novel_world/pages/home_page.dart';
+import 'package:novel_world/tabs/library_tab.dart';
 import 'package:novel_world/tabs/source_tab.dart';
 
 class HomeTabs extends StatefulWidget {
@@ -48,7 +49,7 @@ class _HomeTabsState extends State<HomeTabs> {
               });
             },
             children:  const [
-              HomePage(),
+              MyLibrary(),
               SourceTabs(),
               Text("Hola"),
               Text("Hola")
