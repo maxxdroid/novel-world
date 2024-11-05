@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:novel_world/functions/caching_service.dart';
 import 'package:novel_world/loading_states/loading_home.dart';
@@ -92,8 +91,15 @@ class _SourceHomeState extends State<SourceHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
-        title: const Text("Novel World", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Novel World", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+          ],
+        ),
         centerTitle: true,
       ),
       backgroundColor: Colors.white,

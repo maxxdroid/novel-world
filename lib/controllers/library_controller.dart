@@ -11,6 +11,13 @@ class LibraryController extends GetxController {
     fetchLibraryNovels();
   }
 
+  @override
+  void refresh() {
+    // TODO: implement refresh
+    super.refresh();
+    fetchLibraryNovels();
+  }
+
   var novels = <Novel>[].obs;
   var isLoading = true.obs;
 

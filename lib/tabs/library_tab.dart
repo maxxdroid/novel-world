@@ -40,9 +40,9 @@ class _MyLibraryState extends State<MyLibrary> {
                   final novel = libraryController.novels[index];
                   return GestureDetector(
                     onTap: () {
-                      // if(novel.link == null) {
-                      //   print("Hola");
-                      // }
+                      if(novel.link == null) {
+                        print("Hola");
+                      }
                       Get.to(() => NovelBinDetails(novel: novel));
                     },
                     child: Column(

@@ -6,12 +6,13 @@ class LoadingHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 10.0,
-          mainAxisSpacing: 0,
-          childAspectRatio: .5,
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        crossAxisSpacing: 10.0,
+        mainAxisSpacing: 0,
+        childAspectRatio: .5,
+      ),
       children: List.generate(12, (index) {
         return Column(
           children: [

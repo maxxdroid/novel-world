@@ -9,6 +9,8 @@ import 'package:novel_world/pages/chapter_details.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../controllers/library_controller.dart';
+
 class NovelBinDetails extends StatefulWidget {
   final Novel novel;
   const NovelBinDetails({super.key, required this.novel});
@@ -25,6 +27,8 @@ class _NovelBinDetailsState extends State<NovelBinDetails> {
   Novel? updatedNovel;
   late Future<Novel?> novel;
   late Color color;
+  final LibraryController libraryController = Get.put(LibraryController());
+
 
   Future<void> _fetchAndProcessHtml() async {
     try {

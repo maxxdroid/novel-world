@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:novel_world/tabs/home_tabs.dart';
 
-import '../pages/source_home.dart';
-
 class Landing extends StatefulWidget {
   const Landing({super.key});
 
