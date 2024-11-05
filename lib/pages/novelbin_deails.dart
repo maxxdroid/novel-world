@@ -19,7 +19,7 @@ class NovelBinDetails extends StatefulWidget {
   State<NovelBinDetails> createState() => _NovelBinDetailsState();
 }
 
-class _NovelBinDetailsState extends State<NovelBinDetails> {
+class _NovelBinDetailsState extends State<NovelBinDetails> with SingleTickerProviderStateMixin{
   late WebViewController controller;
   bool loading = true;
   bool isDescriptionExpanded = false; // For toggling description
@@ -28,6 +28,7 @@ class _NovelBinDetailsState extends State<NovelBinDetails> {
   late Future<Novel?> novel;
   late Color color;
   final LibraryController libraryController = Get.put(LibraryController());
+  late TabController tabController;
 
 
   Future<void> _fetchAndProcessHtml() async {
@@ -52,6 +53,7 @@ class _NovelBinDetailsState extends State<NovelBinDetails> {
   void initState() {
     super.initState();
     novel = NovelBinService().getChapters(widget.novel);
+    tabController = TabController(length: 2, vsync: this);
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -188,99 +190,97 @@ class _NovelBinDetailsState extends State<NovelBinDetails> {
                               ],
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isDescriptionExpanded = !isDescriptionExpanded;
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              width: width,
-                              height: isDescriptionExpanded
-                                  ? null // Allow container to expand as needed
-                                  : height * .1, // Fixed height when collapsed
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      novel.description ?? "",
-                                      overflow: isDescriptionExpanded
-                                          ? TextOverflow.visible
-                                          : TextOverflow.fade,
-                                      maxLines: isDescriptionExpanded ? null : 4,
-                                    ),
-                                    Text(
-                                      "Tags: ${novel.genres}",
-                                    style: const TextStyle(fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+
+
+
+                          // TabBar in the middle of the page
+                          TabBar(
+                            controller: tabController,
+                            labelColor: Colors.blue,
+                            unselectedLabelColor: Colors.black,
+                            dividerColor: Colors.black,
+                            tabs: const [
+                              Tab(text: 'Description'),
+                              Tab(text: 'Chapters'),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                          // Content of each tab
+                          Expanded(
+                            child: TabBarView(
+                              controller: tabController,
                               children: [
-                                Row(
+                                description(width, height, novel),
+                                //Second Tab
+
+                                Column(
                                   children: [
-                                    Text(
-                                      "${novel.chapters?.length} Chapters",
-                                      style: const TextStyle(fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    if (loading)
-                                      const SizedBox(
-                                        width: 10,
-                                        height: 10,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                        ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                "${novel.chapters?.length} Chapters",
+                                                style: const TextStyle(fontWeight: FontWeight.bold),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              if (loading)
+                                                const SizedBox(
+                                                  width: 10,
+                                                  height: 10,
+                                                  child: CircularProgressIndicator(
+                                                    strokeWidth: 2,
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                ascending = !ascending;
+                                              });
+                                            },
+                                            child: const Icon(Icons.sort),
+                                          )
+                                        ],
                                       ),
+                                    ),
+                                    Expanded(
+                                      child: ListView.builder(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                                        shrinkWrap: true,
+                                        reverse: ascending,
+                                        itemCount: novel.chapters?.length,
+                                        itemBuilder: (context, index) {
+                                          return Card(
+                                            color: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            child: ListTile(
+                                              onTap: () {
+                                                Get.to(() => ChapterDetails(chapter: novel.chapters![index],));
+                                              },
+                                              title: Text(
+                                                novel.chapters?[index].title ?? "",
+                                                style: const TextStyle(fontSize: 14),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              trailing: const Icon(Icons.download),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
                                   ],
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      ascending = !ascending;
-                                    });
-                                  },
-                                  child: const Icon(Icons.sort),
                                 )
                               ],
                             ),
                           ),
-                          Expanded(
-                            child: ListView.builder(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              shrinkWrap: true,
-                              reverse: ascending,
-                              itemCount: novel.chapters?.length,
-                              itemBuilder: (context, index) {
-                                return Card(
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: ListTile(
-                                    onTap: () {
-                                      Get.to(() => ChapterDetails(chapter: novel.chapters![index],));
-                                    },
-                                    title: Text(
-                                      novel.chapters?[index].title ?? "",
-                                      style: const TextStyle(fontSize: 14),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    trailing: const Icon(Icons.download),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
+
                         ],
                       )
                     ],
@@ -292,6 +292,74 @@ class _NovelBinDetailsState extends State<NovelBinDetails> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget description (double width, double height, Novel newNovel) {
+    
+    // return Column(
+    //   children: [
+    //     GestureDetector(
+    //       onTap: () {
+    //         setState(() {
+    //           isDescriptionExpanded = !isDescriptionExpanded;
+    //         });
+    //       },
+    //       child: isDescriptionExpanded ? Container(
+    //         height: height * .1,
+    //         child: Text(
+    //             newNovel.description ?? "",
+    //             overflow: isDescriptionExpanded
+    //                 ? TextOverflow.visible
+    //                 : TextOverflow.fade,
+    //             maxLines: isDescriptionExpanded ? null : 4,
+    //           ),
+    //       ) : Expanded(
+    //           child: SizedBox(
+    //             width: width,
+    //             child: Text(newNovel.description ?? "", overflow: TextOverflow.clip,),
+    //           )
+    //       ),
+    //     ),
+    //     ElevatedButton(
+    //         onPressed: () {},
+    //         child: const Text("Add To library")
+    //     )
+    //   ],
+    // );
+    
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isDescriptionExpanded = !isDescriptionExpanded;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        width: width,
+        height: isDescriptionExpanded
+            ? height * .5 // Allow container to expand as needed
+            : height * .1, // Fixed height when collapsed
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                newNovel.description ?? "",
+                overflow: isDescriptionExpanded
+                    ? TextOverflow.visible
+                    : TextOverflow.fade,
+                maxLines: isDescriptionExpanded ? null : 4,
+              ),
+              Text(
+                "Tags: ${newNovel.genres}",
+                style: const TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.start,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

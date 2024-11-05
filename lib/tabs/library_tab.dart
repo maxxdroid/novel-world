@@ -17,6 +17,17 @@ class _MyLibraryState extends State<MyLibrary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Library", style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+          ],
+        ),
+      ),
+      backgroundColor: Colors.white,
       body: Obx(() {
         if(libraryController.isLoading.value) {
           return const Center(

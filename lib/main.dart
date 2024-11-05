@@ -6,8 +6,7 @@ import 'package:novel_world/landing/landing.dart';
 void main() {
   runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.transparent,
-    statusBarColor: Colors.transparent,
+    statusBarColor: Colors.white,
   ));
 }
 

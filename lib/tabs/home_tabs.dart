@@ -19,7 +19,7 @@ class _HomeTabsState extends State<HomeTabs> {
   void initState() {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.transparent,
-      statusBarColor: Colors.transparent,
+      statusBarColor: Colors.white,
     ));
 
     super.initState();

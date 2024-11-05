@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:novel_world/functions/caching_service.dart';
 import 'package:novel_world/loading_states/loading_home.dart';
@@ -25,6 +26,9 @@ class _SourceHomeState extends State<SourceHome> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+    ));
 
     fetchNovels(page, isInitial: true);
 
@@ -92,11 +96,11 @@ class _SourceHomeState extends State<SourceHome> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Novel World", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            const Text("Novel World", style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
             IconButton(onPressed: () {}, icon: const Icon(Icons.search))
           ],
         ),
