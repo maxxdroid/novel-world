@@ -192,12 +192,15 @@ class NovelBinService {
             ?.text ?? '';
         novel.yearOfPublication = yearOfPublishing;
 
+        int index = 0;
+
         for (Element chapter in chapters) {
           String chapterTitle = chapter.text.trim();
           String chapterLink = chapter.attributes['href'] ?? '';
 
           // Add to list of chapters
-          allChapters.add(Chapter(title: chapterTitle, link: chapterLink));
+          allChapters.add(Chapter(title: chapterTitle, link: chapterLink, number: index));
+          index++;
         }
         novel.chapters = allChapters;
         return novel;
@@ -295,12 +298,16 @@ class NovelBinService {
             ?.text ?? '';
         novel.yearOfPublication = yearOfPublishing;
 
+        int index = 0;
+
         for (Element chapter in chapters) {
           String chapterTitle = chapter.text.trim();
           String chapterLink = chapter.attributes['href'] ?? '';
 
           // Add to list of chapters
-          allChapters.add(Chapter(title: chapterTitle, link: chapterLink));
+          allChapters.add(Chapter(title: chapterTitle, link: chapterLink, number: index));
+
+          index ++;
         }
         novel.chapters = allChapters;
         return novel;

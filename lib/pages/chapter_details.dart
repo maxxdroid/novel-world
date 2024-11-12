@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:get/get.dart';
 import 'package:novel_world/novelbin/novelbin_service.dart';
 
 import '../model/chapter.dart';
+import '../model/novel.dart';
 
 class ChapterDetails extends StatefulWidget {
   final Chapter chapter;
-  const ChapterDetails({super.key, required this.chapter});
+  final Novel novel;
+  const ChapterDetails({super.key, required this.chapter, required this.novel});
 
   @override
   State<ChapterDetails> createState() => _ChapterDetailsState();
@@ -18,6 +19,8 @@ class _ChapterDetailsState extends State<ChapterDetails> {
   bool _isAppBarVisible = false;
   late String next;
   late String prev;
+
+  int index = 0;
 
   @override
   void initState() {
@@ -122,7 +125,7 @@ class _ChapterDetailsState extends State<ChapterDetails> {
           IconButton(
             onPressed: () {
               if (prev.isNotEmpty) {
-                Chapter prevChapter = Chapter(link: prev);
+                Chapter prevChapter = Chapter(link: prev, number: widget.chapter.number - 1);
                 setState(() {
                   widget.chapter.link = prevChapter.link;
                   loadChapter(); // Reload previous chapter
@@ -134,7 +137,7 @@ class _ChapterDetailsState extends State<ChapterDetails> {
           IconButton(
             onPressed: () {
               if (next.isNotEmpty) {
-                Chapter nextChapter = Chapter(link: next);
+                Chapter nextChapter = Chapter(link: next, number: widget.chapter.number);
                 setState(() {
                   widget.chapter.link = nextChapter.link;
                   loadChapter(); // Reload next chapter

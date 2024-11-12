@@ -6,7 +6,7 @@ class Chapter {
   String? date;
   String? next;
   String? previous;
-  int? number;
+  int number;
   String? book;
 
   Chapter({
@@ -15,6 +15,7 @@ class Chapter {
     this.next,
     this.previous,
     this.date,
+    required this.number,
     bool? read,
     required this.link
 }) : read = read ?? false;
@@ -27,6 +28,7 @@ class Chapter {
       read: json["read"],
       next: json["next"],
       previous: json["prev"],
+      number: json["number"]
     );
   }
 

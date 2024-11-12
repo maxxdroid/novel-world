@@ -265,7 +265,7 @@ class _NovelBinDetailsState extends State<NovelBinDetails> with SingleTickerProv
                                             ),
                                             child: ListTile(
                                               onTap: () {
-                                                Get.to(() => ChapterDetails(chapter: novel.chapters![index],));
+                                                Get.to(() => ChapterDetails(chapter: novel.chapters![index], novel: novel,));
                                               },
                                               title: Text(
                                                 novel.chapters?[index].title ?? "",

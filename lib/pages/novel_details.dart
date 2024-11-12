@@ -303,7 +303,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
                               ),
                               child: ListTile(
                                 onTap: () {
-                                  Get.to(() => ChapterDetails(chapter: novel.chapters![index],));
+                                  Get.to(() => ChapterDetails(chapter: novel.chapters![index], novel: novel,));
                                 },
                                 title: Text(
                                   novel.chapters?[index].title ?? "",
@@ -478,7 +478,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
                               ),
                               child: ListTile(
                                 onTap: () {
-                                  Get.to(() => ChapterDetails(chapter: novel.chapters![index],));
+                                  Get.to(() => ChapterDetails(chapter: novel.chapters![index], novel: novel,));
                                 },
                                 title: Text(
                                   novel.chapters?[index].title ?? "",
