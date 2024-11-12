@@ -1,6 +1,6 @@
 class Chapter {
   String? title;
-  bool read = false;
+  bool read;
   String link;
   String? content;
   String? date;
@@ -15,16 +15,18 @@ class Chapter {
     this.next,
     this.previous,
     this.date,
+    bool? read,
     required this.link
-});
+}) : read = read ?? false;
 
   factory Chapter.fromJson(Map<String, dynamic> json) {
     return Chapter(
       content: json["content"],
         link: json["link"],
       title: json["title"],
+      read: json["read"],
       next: json["next"],
-      previous: json["prev"]
+      previous: json["prev"],
     );
   }
 

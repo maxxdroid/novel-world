@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:novel_world/controllers/library_controller.dart';
 import 'package:get/get.dart';
+import 'package:novel_world/controllers/library_controller.dart';
 
 import '../pages/novel_details.dart';
-import '../pages/novelbin_deails.dart';
 
 class MyLibrary extends StatefulWidget {
   const MyLibrary({super.key});

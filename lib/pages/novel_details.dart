@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:html/parser.dart';
@@ -60,6 +61,10 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.transparent,
+      statusBarColor: Colors.transparent,
+    ));
     localNovel = widget.novel;
     novel = NovelBinService().getChapters(widget.novel);
     tabController = TabController(length: 2, vsync: this);
@@ -74,6 +79,16 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
       )
       ..loadRequest(Uri.parse("${widget.novel.link!}#tab-chapters-title"));
   }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  //   //   systemNavigationBarColor: Colors.transparent,
+  //   //   statusBarColor: Colors.white,
+  //   // ));
+  // }
 
   @override
   Widget build(BuildContext context) {

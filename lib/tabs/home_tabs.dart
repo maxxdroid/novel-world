@@ -16,10 +16,10 @@ class HomeTabsState extends State<HomeTabs> {
 
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.transparent,
-      statusBarColor: Colors.white,
-    ));
+    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    //   systemNavigationBarColor: Colors.transparent,
+    //   // statusBarColor: Colors.white,
+    // ));
 
     super.initState();
     pageController = PageController(initialPage: pageIndex);

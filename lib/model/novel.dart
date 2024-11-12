@@ -19,6 +19,7 @@ class Novel {
   String? type;
   String? latestChapter;
   String? latestChapterUrl;
+  Chapter? lastReadChapter;
   List<Chapter>? chapters;
 
   Novel({
@@ -27,6 +28,7 @@ class Novel {
     this.color,
     this.description,
     this.genres,
+    Chapter? lastReadChapter,
     required this.title,
     required this.link,
     required this.imgUrl,
@@ -49,6 +51,9 @@ class Novel {
       description: json["description"],
       genres: json["genres"],
       link: json["link"],
+      lastReadChapter: json["lastReadChapter"] != null
+          ? Chapter.fromJson(json["lastReadChapter"])
+          : null,  // Handle null value for lastReadChapter
       chapters: (json["chapters"] as List<dynamic>?)
           ?.map((item) => Chapter.fromJson(item as Map<String, dynamic>))
           .toList(),
@@ -65,6 +70,7 @@ class Novel {
       "link": link,
       "genres": genres,
       "description": description,
+      "lastReadChapter" : lastReadChapter?.toJson(),
       "author": author,
       "color": colorToInt(color), // Convert Color to integer
       "chapters": chapters?.map((chap) => chap.toJson()).toList(),

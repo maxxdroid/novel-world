@@ -5,9 +5,6 @@ import 'package:novel_world/landing/landing.dart';
 
 void main() {
   runApp(const MyApp());
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.white,
-  ));
 }
 
 class MyApp extends StatelessWidget {
