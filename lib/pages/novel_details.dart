@@ -49,8 +49,9 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
       int? newChapters = novelWithChapters?.chapters?.length;
 
       if(newChapters! >= chapters!) {
-        print("......................Same shid");
+        libraryController.updateLibraryNovel(novelWithChapters!);
       }
+
     } catch (e) {
       print("Error fetching and processing HTML content: $e");
     }
@@ -79,7 +80,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: widget.novel.color,
       body: Stack(
         children: [
           SizedBox(
