@@ -209,8 +209,8 @@ class NovelBinService {
 
     } catch (e) {
       print(e);
+      return null;
     }
-    return null;
 
   }
 
@@ -225,6 +225,10 @@ class NovelBinService {
             chapterList?.querySelectorAll('ul.list-chapter li a') ?? [];
 
         print('Size: ${chapters.length}');
+
+        if (chapters.isEmpty) {
+          return novel;
+        }
 
 
         // Extract alternative names
@@ -305,7 +309,6 @@ class NovelBinService {
       print(e);
     }
     return null;
-
   }
 
   Future<Chapter> getChapterContent(Chapter chapter) async {
@@ -363,6 +366,5 @@ class NovelBinService {
     }
     return chapter;
   }
-
 
 }

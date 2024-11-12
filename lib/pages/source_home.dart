@@ -93,6 +93,7 @@ class _SourceHomeState extends State<SourceHome> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -109,7 +110,7 @@ class _SourceHomeState extends State<SourceHome> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          Expanded(
+          Flexible(
             child: isInitialLoading
                 ? const LoadingHome()// Initial loading indicator
                 : GridView.builder(
@@ -162,7 +163,7 @@ class _SourceHomeState extends State<SourceHome> {
                             SizedBox(
                               width: 100,
                               height: 40,
-                              child: Text(novel.title ?? "", overflow: TextOverflow.fade),
+                              child: Text(novel.title ?? "", overflow: TextOverflow.fade, textAlign: TextAlign.center,),
                             ),
                           ],
                         ),

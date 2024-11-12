@@ -24,6 +24,7 @@ class _NovelBinDetailsState extends State<NovelBinDetails> with SingleTickerProv
   bool loading = true;
   bool isDescriptionExpanded = false; // For toggling description
   bool ascending = false; // For toggling sorting
+  bool inLibrary = false;
   Novel? updatedNovel;
   late Future<Novel?> novel;
   late Color color;
@@ -54,6 +55,7 @@ class _NovelBinDetailsState extends State<NovelBinDetails> with SingleTickerProv
     super.initState();
     novel = NovelBinService().getChapters(widget.novel);
     tabController = TabController(length: 2, vsync: this);
+    inLibrary = libraryController.novelInLibrary(widget.novel);
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -110,8 +112,9 @@ class _NovelBinDetailsState extends State<NovelBinDetails> with SingleTickerProv
                             if (snapshot.hasError) {
                               return const SizedBox();
                             } else if (snapshot.hasData) {
-                              Color c = snapshot.data!.lightMutedColor?.color != null ? snapshot.data!.lightMutedColor!.color: Colors.white10;
+                              Color c = snapshot.data!.lightMutedColor?.color != null ? snapshot.data!.lightMutedColor!.color: Colors.grey;
                               color = c;
+                              novel?.color = c;
                               return Container(
                                 color: c,
                                 height: height,
@@ -206,7 +209,7 @@ class _NovelBinDetailsState extends State<NovelBinDetails> with SingleTickerProv
                           ),
 
                           // Content of each tab
-                          Expanded(
+                          Flexible(
                             child: TabBarView(
                               controller: tabController,
                               children: [
@@ -297,70 +300,90 @@ class _NovelBinDetailsState extends State<NovelBinDetails> with SingleTickerProv
   }
 
   Widget description (double width, double height, Novel newNovel) {
-    
-    // return Column(
-    //   children: [
-    //     GestureDetector(
-    //       onTap: () {
-    //         setState(() {
-    //           isDescriptionExpanded = !isDescriptionExpanded;
-    //         });
-    //       },
-    //       child: isDescriptionExpanded ? Container(
-    //         height: height * .1,
-    //         child: Text(
-    //             newNovel.description ?? "",
-    //             overflow: isDescriptionExpanded
-    //                 ? TextOverflow.visible
-    //                 : TextOverflow.fade,
-    //             maxLines: isDescriptionExpanded ? null : 4,
-    //           ),
-    //       ) : Expanded(
-    //           child: SizedBox(
-    //             width: width,
-    //             child: Text(newNovel.description ?? "", overflow: TextOverflow.clip,),
-    //           )
-    //       ),
-    //     ),
-    //     ElevatedButton(
-    //         onPressed: () {},
-    //         child: const Text("Add To library")
-    //     )
-    //   ],
-    // );
-    
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          isDescriptionExpanded = !isDescriptionExpanded;
-        });
-      },
-      child: Container(
+    return Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        width: width,
-        height: isDescriptionExpanded
-            ? height * .5 // Allow container to expand as needed
-            : height * .1, // Fixed height when collapsed
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                newNovel.description ?? "",
-                overflow: isDescriptionExpanded
-                    ? TextOverflow.visible
-                    : TextOverflow.fade,
-                maxLines: isDescriptionExpanded ? null : 4,
+        width: width,// Fixed height when collapsed
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 10,),
+                  Text(
+                    newNovel.description ?? "",),
+                  const Text(
+                    "Tags",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                  const SizedBox(height: 5,),
+                  Wrap(
+                    spacing: 8.0, // Horizontal space between tags
+                    runSpacing: 4.0, // Vertical space between rows of tags
+                    children: (newNovel.genres?.split(", ") ?? []).map((tag) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.shade100,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          tag,
+                          style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
+                        ),
+                      );
+                    }).toList(), ),
+                  const SizedBox(height: 100,),
+                ],
               ),
-              Text(
-                "Tags: ${newNovel.genres}",
-                style: const TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
+            ),
+            Container(alignment: Alignment.bottomCenter,
+              padding: const EdgeInsets.symmetric(horizontal: 00, vertical: 20),
+              width: width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                      onPressed: (){},
+                      child: SizedBox(
+                        width: width * .3,
+                        height: 50,
+                        child: const Center(
+                          child: Text("Start Reading", overflow: TextOverflow.ellipsis,),
+                        ),
+                      )
+                  ),
+                  ElevatedButton(
+                      onPressed: (){
+
+                        if(!inLibrary) {
+                          libraryController.addToLibrary(newNovel);
+                          setState(() {
+                            inLibrary = true;
+                          });
+                        } else {
+                          libraryController.removeFromLibrary(newNovel);
+                          setState(() {
+                            inLibrary = false;
+                          });
+                        }
+
+                      },
+                      child: SizedBox(
+                        width: width * .3,
+                        height: 50,
+                        child: Center(
+                          child: inLibrary ? const Text("Remove", overflow: TextOverflow.ellipsis)
+                          : const Text("Add to Library", overflow: TextOverflow.ellipsis),
+                        ),
+                      )
+                  )
+                ],
               ),
-            ],
-          ),
+            )
+          ],
         ),
-      ),
     );
   }
 }

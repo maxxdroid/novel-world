@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:novel_world/controllers/library_controller.dart';
 import 'package:get/get.dart';
 
+import '../pages/novel_details.dart';
 import '../pages/novelbin_deails.dart';
 
 class MyLibrary extends StatefulWidget {
@@ -36,7 +37,7 @@ class _MyLibraryState extends State<MyLibrary> {
         }
         return Column(
           children: [
-            Expanded(
+            Flexible(
               child: GridView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 itemCount: libraryController.novels.length,
@@ -53,8 +54,10 @@ class _MyLibraryState extends State<MyLibrary> {
                     onTap: () {
                       if(novel.link == null) {
                         print("Hola");
+                      } else {
+                        // print("novel Details::${novel.toJson()}");
+                        Get.to(() => NovelDetails(novel: novel));
                       }
-                      Get.to(() => NovelBinDetails(novel: novel));
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +73,7 @@ class _MyLibraryState extends State<MyLibrary> {
                         SizedBox(
                           width: 100,
                           height: 40,
-                          child: Text(novel.title ?? "", overflow: TextOverflow.fade),
+                          child: Text(novel.title ?? "", overflow: TextOverflow.fade, textAlign: TextAlign.center,),
                         ),
                       ],
                     ),
