@@ -37,6 +37,21 @@ class LibraryController extends GetxController {
     }
   }
 
+  void updateLibraryNovel(Novel updatedNovel) async {
+    // Find the index of the existing novel with the same title
+    int index = novels.indexWhere((novel) => novel.title == updatedNovel.title);
+
+    if (index != -1) {
+      // Replace the existing novel with the updated novel
+      novels[index] = updatedNovel;
+      saveNovelsInLibrary();  // Save the updated list to SharedPreferences
+    } else {
+      // Optionally, show a message if the novel was not found in the library
+      Get.snackbar("Info", "The novel is not in your library");
+    }
+  }
+
+
   bool novelInLibrary(Novel novel) {
     if (novels.any((existingNovel) => existingNovel.title == novel.title)) {
       return true;

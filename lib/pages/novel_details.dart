@@ -25,7 +25,6 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
   bool isDescriptionExpanded = false; // For toggling description
   bool ascending = false; // For toggling sorting
   bool inLibrary = false;
-  // Novel? updatedNovel;
   late Future<Novel?> novel;
   late Color color;
   late Novel localNovel;
@@ -35,6 +34,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
 
   Future<void> _fetchAndProcessHtml() async {
     try {
+      int? chapters = widget.novel.chapters?.length;
 
       String doc = await controller.runJavaScriptReturningResult('document.documentElement.innerHTML') as String;
       var jsonString = json.decode(doc);
@@ -46,6 +46,11 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
         novel = Future.value(novelWithChapters);
         loading = false;
       });
+      int? newChapters = novelWithChapters?.chapters?.length;
+
+      if(newChapters! >= chapters!) {
+        print("......................Same shid");
+      }
     } catch (e) {
       print("Error fetching and processing HTML content: $e");
     }
