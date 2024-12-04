@@ -14,6 +14,7 @@ class Chapter {
     this.content,
     this.next,
     this.previous,
+    this.book,
     this.date,
     required this.number,
     bool? read,

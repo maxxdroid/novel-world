@@ -23,15 +23,25 @@ class Novel {
   List<Chapter>? chapters;
 
   Novel({
-    this.chapters,
+    this.title,
+    this.imgUrl,
     this.author,
-    this.color,
+    this.alternativeNames,
     this.description,
     this.genres,
-    Chapter? lastReadChapter,
-    required this.title,
-    required this.link,
-    required this.imgUrl,
+    this.status,
+    this.publisher,
+    this.tags,
+    this.yearOfPublication,
+    this.link,
+    this.color,
+    this.lastUpdated,
+    this.complete,
+    this.type,
+    this.latestChapter,
+    this.latestChapterUrl,
+    this.lastReadChapter,
+    this.chapters,
   });
 
   // Convert a Color object to its integer representation for JSON serialization
@@ -47,18 +57,29 @@ class Novel {
 
   factory Novel.fromJson(Map<String, dynamic> json) {
     return Novel(
-      title: json["title"],
+      title: json["title"] ?? '',
       description: json["description"],
       genres: json["genres"],
-      link: json["link"],
+      link: json["link"] ?? '',
       lastReadChapter: json["lastReadChapter"] != null
           ? Chapter.fromJson(json["lastReadChapter"])
-          : null,  // Handle null value for lastReadChapter
+          : null,
       chapters: (json["chapters"] as List<dynamic>?)
-          ?.map((item) => Chapter.fromJson(item as Map<String, dynamic>))
+          ?.map((item) {
+        try {
+          var chap = Chapter.fromJson(item as Map<String, dynamic>);
+          if (chap.content != null) {
+          }
+
+          return chap;
+        } catch (e) {
+          print("Error decoding chapter: $item, Error: $e");
+          return null;
+        }
+      }).whereType<Chapter>() // Filter out invalid chapters
           .toList(),
-      imgUrl: json["imgUrl"],
-      color: intToColor(json["color"]), // Convert integer back to Color
+      imgUrl: json["imgUrl"] ?? '',
+      color: intToColor(json["color"]),
       author: json["author"],
     );
   }
@@ -70,9 +91,9 @@ class Novel {
       "link": link,
       "genres": genres,
       "description": description,
-      "lastReadChapter" : lastReadChapter?.toJson(),
+      "lastReadChapter": lastReadChapter?.toJson(),
       "author": author,
-      "color": colorToInt(color), // Convert Color to integer
+      "color": colorToInt(color),
       "chapters": chapters?.map((chap) => chap.toJson()).toList(),
     };
   }
@@ -90,5 +111,50 @@ class Novel {
   @override
   int get hashCode {
     return title.hashCode ^ imgUrl.hashCode ^ link.hashCode;
+  }
+
+  // CopyWith Method
+  Novel copyWith({
+    String? title,
+    String? imgUrl,
+    String? author,
+    String? alternativeNames,
+    String? description,
+    String? genres,
+    String? status,
+    String? publisher,
+    String? tags,
+    String? yearOfPublication,
+    String? link,
+    Color? color,
+    String? lastUpdated,
+    String? complete,
+    String? type,
+    String? latestChapter,
+    String? latestChapterUrl,
+    Chapter? lastReadChapter,
+    List<Chapter>? chapters,
+  }) {
+    return Novel(
+      title: title ?? this.title,
+      imgUrl: imgUrl ?? this.imgUrl,
+      author: author ?? this.author,
+      alternativeNames: alternativeNames ?? this.alternativeNames,
+      description: description ?? this.description,
+      genres: genres ?? this.genres,
+      status: status ?? this.status,
+      publisher: publisher ?? this.publisher,
+      tags: tags ?? this.tags,
+      yearOfPublication: yearOfPublication ?? this.yearOfPublication,
+      link: link ?? this.link,
+      color: color ?? this.color,
+      lastUpdated: lastUpdated ?? this.lastUpdated,
+      complete: complete ?? this.complete,
+      type: type ?? this.type,
+      latestChapter: latestChapter ?? this.latestChapter,
+      latestChapterUrl: latestChapterUrl ?? this.latestChapterUrl,
+      lastReadChapter: lastReadChapter ?? this.lastReadChapter,
+      chapters: chapters ?? this.chapters,
+    );
   }
 }

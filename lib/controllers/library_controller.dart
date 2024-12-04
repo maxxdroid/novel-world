@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:novel_world/functions/caching_service.dart';
+import 'package:novel_world/functions/novel_functions.dart';
 import 'package:novel_world/model/novel.dart';
 
 import '../tabs/home_tabs.dart';
 
 class LibraryController extends GetxController {
   final GlobalKey<HomeTabsState> homeTabsKey = GlobalKey<HomeTabsState>();
+  final NovelFunction func = NovelFunction();
 
 
   @override
@@ -40,10 +42,16 @@ class LibraryController extends GetxController {
   void updateLibraryNovel(Novel updatedNovel) async {
     // Find the index of the existing novel with the same title
     int index = novels.indexWhere((novel) => novel.title == updatedNovel.title);
+    print("...............Updated.................");
+
 
     if (index != -1) {
+      //Saving only the changed aspects
+      var newNovel = func.updateNovelWithChanges(novels[index], updatedNovel);
       // Replace the existing novel with the updated novel
-      novels[index] = updatedNovel;
+      novels[index] = newNovel;
+      print("${newNovel.toJson()}");
+      // Get.snackbar("Info", "novel updated");
       saveNovelsInLibrary();  // Save the updated list to SharedPreferences
     } else {
       // Optionally, show a message if the novel was not found in the library
@@ -78,7 +86,6 @@ class LibraryController extends GetxController {
   void removeFromLibrary(Novel novel) {
     if(novels.any((existingNovel) => existingNovel.title == novel.title)) {
       novels.remove(novel);
-      print("${novel.toJson()}");
       saveNovelsInLibrary();
     } else {
       // Optionally, show a message if the novel is already in the library

@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:novel_world/functions/caching_service.dart';
 import 'package:novel_world/model/novel.dart';
 import 'package:novel_world/novelbin/novelbin_service.dart';
@@ -16,13 +14,16 @@ class ChapterController extends GetxController {
   // Fetch LibraryController instance
   final LibraryController libraryController = Get.find<LibraryController>();
 
-
   Future<void> downloadNovel (Novel novel) async {
     for (Chapter chapter in novel.chapters!) {
-      chapter = await novelBinService.getChapterContent(chapter);
-      novel.chapters?[chapter.number] = chapter;
+      if(chapter.content == null) {
+        chapter = await novelBinService.getChapterContent(novel.chapters![chapter.number]);
+        novel.chapters?[chapter.number] = chapter;
+        libraryController.updateLibraryNovel(novel);
+        print(".........${chapter.number} downloaded ");
+      }
     }
-    libraryController.updateLibraryNovel(novel);
+    Get.snackbar("${novel.title}", "Download Complete!");
   }
 
 }

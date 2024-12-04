@@ -365,11 +365,13 @@ class NovelBinService {
         // Extract previous chapter link
         final prevChapterElement = document.getElementById('prev_chap');
         chapter.previous = prevChapterElement?.attributes['href'];
+        print(">>>>${chapter.toJson()}");
 
         return chapter;
       }
     } catch (e) {
       print("Error fetching chapter content: $e");
+      return chapter;
     }
     return chapter;
   }

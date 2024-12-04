@@ -5,9 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:html/parser.dart';
+import 'package:novel_world/functions/novel_functions.dart';
 import 'package:novel_world/model/novel.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../controllers/chapter_controller.dart';
 import '../controllers/library_controller.dart';
 import '../novelbin/novelbin_service.dart';
 import 'chapter_details.dart';
@@ -21,15 +23,18 @@ class NovelDetails extends StatefulWidget {
 }
 
 class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderStateMixin{
+  final NovelFunction func = NovelFunction();
   late WebViewController controller;
   bool loading = true;
   bool isDescriptionExpanded = false; // For toggling description
   bool ascending = false; // For toggling sorting
   bool inLibrary = false;
+  bool check = true;
   late Future<Novel?> novel;
   late Color color;
   late Novel localNovel;
   final LibraryController libraryController = Get.put(LibraryController());
+  final ChapterController chapterController = Get.put(ChapterController());
   late TabController tabController;
 
 
@@ -42,16 +47,19 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
       var dom = parse(jsonString);
 
       Novel? novelWithChapters = await NovelBinService().getChaptersFromDocument(widget.novel, dom);
+      Novel newNovel = func.updateNovelWithChanges(novelWithChapters!, widget.novel);
 
       setState(() {
-        novel = Future.value(novelWithChapters);
+        novel = Future.value(newNovel);
         loading = false;
       });
       int? newChapters = novelWithChapters?.chapters?.length;
 
-      if(newChapters! >= chapters!) {
-        libraryController.updateLibraryNovel(novelWithChapters!);
-      }
+      // if(newChapters! >= chapters! && check) {
+      //   check = false;
+      //   print("............................updating");
+      //   libraryController.updateLibraryNovel(novelWithChapters!);
+      // }
 
     } catch (e) {
       print("Error fetching and processing HTML content: $e");
@@ -80,15 +88,6 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
       ..loadRequest(Uri.parse("${widget.novel.link!}#tab-chapters-title"));
   }
 
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   super.dispose();
-  //   // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-  //   //   systemNavigationBarColor: Colors.transparent,
-  //   //   statusBarColor: Colors.white,
-  //   // ));
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +116,6 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
                 } else if (snapshot.hasError) {
                   return localNovelDetails(width, height, localNovel);
                 } else if (snapshot.hasData) {
-                  // print("....::${widget.novel.toJson()}");
                   final novel = snapshot.data ?? widget.novel;
 
                   Future<PaletteGenerator> updatePalette() async {
@@ -278,13 +276,26 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
                                   ),
                               ],
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  ascending = !ascending;
-                                });
-                              },
-                              child: const Icon(Icons.sort),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    chapterController.downloadNovel(novel);
+                                  },
+                                  child: const Icon(Icons.download),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      ascending = !ascending;
+                                    });
+                                  },
+                                  child: const Icon(Icons.sort),
+                                )
+                              ],
                             )
                           ],
                         ),
@@ -296,6 +307,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
                           reverse: ascending,
                           itemCount: novel.chapters?.length,
                           itemBuilder: (context, index) {
+                            bool chapterDownloaded = novel.chapters?[index].content != null;
                             return Card(
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
@@ -303,6 +315,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
                               ),
                               child: ListTile(
                                 onTap: () {
+                                  print(">>>>12 :${novel.chapters![index].content}");
                                   Get.to(() => ChapterDetails(chapter: novel.chapters![index], novel: novel,));
                                 },
                                 title: Text(
@@ -310,7 +323,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
                                   style: const TextStyle(fontSize: 14),
                                   overflow: TextOverflow.ellipsis,
                                 ),
-                                trailing: const Icon(Icons.download),
+                                trailing: chapterDownloaded ? const Icon(Icons.download_done_rounded) : const Icon(Icons.download),
                               ),
                             );
                           },
@@ -453,13 +466,24 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
                                   ),
                               ],
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  ascending = !ascending;
-                                });
-                              },
-                              child: const Icon(Icons.sort),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: const Icon(Icons.download),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      ascending = !ascending;
+                                    });
+                                  },
+                                  child: const Icon(Icons.sort),
+                                )
+                              ],
                             )
                           ],
                         ),
