@@ -42,16 +42,12 @@ class LibraryController extends GetxController {
   void updateLibraryNovel(Novel updatedNovel) async {
     // Find the index of the existing novel with the same title
     int index = novels.indexWhere((novel) => novel.title == updatedNovel.title);
-    print("...............Updated.................");
-
-
     if (index != -1) {
       //Saving only the changed aspects
       var newNovel = func.updateNovelWithChanges(novels[index], updatedNovel);
       // Replace the existing novel with the updated novel
       novels[index] = newNovel;
       print("${newNovel.toJson()}");
-      // Get.snackbar("Info", "novel updated");
       saveNovelsInLibrary();  // Save the updated list to SharedPreferences
     } else {
       // Optionally, show a message if the novel was not found in the library

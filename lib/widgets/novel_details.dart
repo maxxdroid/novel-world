@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:novel_world/model/novel.dart';
 import 'package:novel_world/widgets/novel_description.dart';
 
+import '../controllers/chapter_controller.dart';
 import '../pages/chapter_details.dart';
 
 class NovelDetailsWidget extends StatefulWidget {
@@ -19,6 +20,7 @@ class _NovelDetailsWidgetState extends State<NovelDetailsWidget> with SingleTick
   late TabController tabController;
   bool loading = false;
   bool ascending = false;
+  final ChapterController chapterController = Get.put(ChapterController());
 
   @override
   void initState() {
@@ -159,7 +161,9 @@ class _NovelDetailsWidgetState extends State<NovelDetailsWidget> with SingleTick
                             Row(
                               children: [
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    chapterController.downloadNovel(novel);
+                                  },
                                   child: const Icon(Icons.download),
                                 ),
                                 const SizedBox(

@@ -16,9 +16,9 @@ class _SourceTabsState extends State<SourceTabs> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
-    ));
+    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    //   statusBarColor: Colors.white,
+    // ));
   }
 
   @override
@@ -36,13 +36,15 @@ class _SourceTabsState extends State<SourceTabs> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Last"),
-            sourceWidget(width),
-            sourceWidget(width),
-            const Text("Frequently Used"),
-            sourceWidget(width),
-            sourceWidget(width),
             const Text("Pinned"),
+            sourceWidget(width),
+            sourceWidget(width),
+            const Text("All"),
+            sourceWidget(width),
+            sourceWidget(width),
+            sourceWidget(width),
+            sourceWidget(width),
+            sourceWidget(width),
             sourceWidget(width),
             sourceWidget(width),
           ],

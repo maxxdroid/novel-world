@@ -20,7 +20,6 @@ class ChapterController extends GetxController {
         chapter = await novelBinService.getChapterContent(novel.chapters![chapter.number]);
         novel.chapters?[chapter.number] = chapter;
         libraryController.updateLibraryNovel(novel);
-        print(".........${chapter.number} downloaded ");
       }
     }
     Get.snackbar("${novel.title}", "Download Complete!");
