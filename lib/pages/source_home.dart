@@ -23,6 +23,7 @@ class _SourceHomeState extends State<SourceHome> {
   bool isLoading = false;
   bool isInitialLoading = true; // To track the initial load state
   bool isSearch = false;
+  final TextEditingController searchController = TextEditingController();
 
 
   @override
@@ -113,8 +114,9 @@ class _SourceHomeState extends State<SourceHome> {
                     color: Colors.grey.withOpacity(.4),
                     borderRadius: BorderRadius.circular(10)
                   ),
-                  padding: EdgeInsets.only(left: 20 ,bottom: 8),
+                  padding: const EdgeInsets.only(left: 20 ,bottom: 8),
                   child: TextFormField(
+                    controller: searchController,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: "Search"
