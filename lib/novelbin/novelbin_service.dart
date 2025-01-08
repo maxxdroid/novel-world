@@ -102,6 +102,44 @@ class NovelBinService {
     return hotNovels;
   }
 
+  Future<List<Novel>> searchNovels(String keyWord) async {
+    List<Novel> searchNovels = [];
+    try {
+      final response = await http.get(Uri.parse("${url}search?keyword=$keyWord"));
+      if (response.statusCode == 200) {
+        // Parse the HTML response
+        Document document = parse(response.body);
+
+        // Select the novel list container
+        List<Element> novels = document.querySelectorAll('.list.list-novel .row');
+
+        for (Element novel in novels) {
+          // Extract the title
+          String title = novel.querySelector('.novel-title a')?.text.trim() ?? '';
+
+          // Extract the link
+          String link = novel.querySelector('.novel-title a')?.attributes['href'] ?? '';
+
+          // Extract the image URL, prioritizing 'src' or 'data-src' attribute
+          String imageUrl = novel.querySelector('.cover')?.attributes['data-src'] ??
+              novel.querySelector('.cover')?.attributes['src'] ?? '';
+
+          imageUrl = revertImageUrl(imageUrl);
+
+          // Ensure non-empty title and link before adding to list
+          if (title.isNotEmpty && link.isNotEmpty) {
+            searchNovels.add(Novel(title: title, link: link, imgUrl: imageUrl));
+          }
+        }
+      } else {
+        throw Exception('Failed to load web page');
+      }
+    } catch (e) {
+      print('Error fetching hot novels: $e');
+    }
+    return searchNovels;
+  }
+
 
   Future<Novel?> getChapters (Novel novel) async {
     List<Chapter> allChapters = [];
