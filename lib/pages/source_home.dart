@@ -22,6 +22,8 @@ class _SourceHomeState extends State<SourceHome> {
   List<Novel> allNovels = [];
   bool isLoading = false;
   bool isInitialLoading = true; // To track the initial load state
+  bool isSearch = false;
+
 
   @override
   void initState() {
@@ -99,10 +101,33 @@ class _SourceHomeState extends State<SourceHome> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: isSearch ? MainAxisAlignment.end : MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Novel World", style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+            if(!isSearch)const Text("Novel World", style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+            isSearch ?
+                //Search Bar
+                Container(
+                  width: 200,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(.4),
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  padding: EdgeInsets.only(left: 20 ,bottom: 8),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Search"
+                    ),
+                  ),
+                ) :
+            IconButton(onPressed: () {
+              setState(() {
+                isSearch = true;
+              });
+            }, icon: const Icon(Icons.search)),
+
+
           ],
         ),
         centerTitle: true,
