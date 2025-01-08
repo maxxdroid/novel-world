@@ -24,6 +24,7 @@ class _SourceHomeState extends State<SourceHome> {
   bool isInitialLoading = true; // To track the initial load state
   bool isSearch = false;
   final TextEditingController searchController = TextEditingController();
+  final NovelBinService novelService = NovelBinService();
 
 
   @override
@@ -39,6 +40,14 @@ class _SourceHomeState extends State<SourceHome> {
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent && !isLoading) {
         _onEndReached();
       }
+    });
+  }
+
+  Future<void> search () async {
+    allNovels = await novelService.searchNovels(searchController.text);
+    // print("done");
+    // novels = Future.value(searchNovels);
+    setState(() {
     });
   }
 
@@ -117,6 +126,9 @@ class _SourceHomeState extends State<SourceHome> {
                   padding: const EdgeInsets.only(left: 20 ,bottom: 8),
                   child: TextFormField(
                     controller: searchController,
+                    onFieldSubmitted: (_) {
+                      search();
+                    },
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: "Search"
