@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:novel_world/controllers/library_controller.dart';
 
 import '../pages/library_novel.dart';
-import '../pages/novel_details.dart';
 
 class MyLibrary extends StatefulWidget {
   const MyLibrary({super.key});
@@ -53,7 +52,6 @@ class _MyLibraryState extends State<MyLibrary> {
                   return GestureDetector(
                     onTap: () {
                       if(novel.link == null) {
-                        print("Hola");
                       } else {
                         // print("novel Details::${novel.toJson()}");
                         // Get.to(() => NovelDetails(novel: novel));
