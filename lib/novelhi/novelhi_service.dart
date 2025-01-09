@@ -81,13 +81,29 @@ class NovelHiService {
         final jsonNovels = jsonResponse["data"]["list"];
 
         for (var novel in jsonNovels) {
+          String title = novel["bookName"];
+          String desc = novel["bookDesc"];
+
+          final genres = novel["genres"];
+
+          String genreList = "";
+
+          for(var genre in genres) {
+            if (genreList == "" ) {
+              genreList = "${genre["genreName"]}";
+            } else {
+              genreList = "$genreList, ${genre["genreName"]}";
+            }
+          }
+
           Novel newNovel = Novel(
               title: novel["bookName"],
-              link: novel["picUrl"],
+              link: "${url}s/${title.replaceAll(" ", "-")}",
               imgUrl: novel["picUrl"],
               author: novel["authorName"],
               status: novel["bookStatus"] == '0' ? "completed" : "ongoing",
-              description: novel["bookDesc"],
+              description: desc.replaceAll("<br>", "\n"),
+              genres: genreList,
               yearOfPublication: novel[""]
           );
           getNovels.add(newNovel);
