@@ -8,6 +8,7 @@ class Chapter {
   String? previous;
   int number;
   String? book;
+  bool downloaded;
 
   Chapter({
     this.title,
@@ -19,7 +20,7 @@ class Chapter {
     required this.number,
     bool? read,
     required this.link
-}) : read = read ?? false;
+}) : read = read ?? false, downloaded = content != null;
 
   factory Chapter.fromJson(Map<String, dynamic> json) {
     return Chapter(

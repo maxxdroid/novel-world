@@ -413,5 +413,4 @@ class NovelBinService {
     }
     return chapter;
   }
-
 }
