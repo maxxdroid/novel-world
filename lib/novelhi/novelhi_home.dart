@@ -116,7 +116,7 @@ class _NovelHiHomeState extends State<NovelHiHome> {
         title: Row(
           mainAxisAlignment: isSearch ? MainAxisAlignment.end : MainAxisAlignment.spaceBetween,
           children: [
-            if(!isSearch)const Text("Novel World", style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+            if(!isSearch)const Text("Novel Hi", style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
             isSearch ?
             //Search Bar
             Container(
