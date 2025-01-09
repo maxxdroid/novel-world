@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:novel_world/novelhi/novelhi_home.dart';
 import 'package:novel_world/pages/source_home.dart';
 
 class SourceTabs extends StatefulWidget {
@@ -57,7 +58,7 @@ class _SourceTabsState extends State<SourceTabs> {
     return InkWell(
       borderRadius: BorderRadius.circular(10),
       onTap: () {
-        Get.to(() => const SourceHome());
+        Get.to(() => const NovelHiHome());
       },
       child: Padding(
           padding: const EdgeInsets.all(10),
