@@ -50,5 +50,39 @@ class NovelHiService {
     
     return getNovels;
   }
+
+  Future<List<Novel>> searchNovels (String keyWords, int page) async {
+    List<Novel> getNovels = [];
+
+    try {
+
+      final response = await http.get(Uri.parse("https://novelhi.com/book/searchByPageInShelf?curr=$page&limit=20&keyword=$keyWords"), headers: headers);
+
+      if (response.statusCode == 200) {
+
+        final jsonResponse = jsonDecode(response.body);
+
+        final jsonNovels = jsonResponse["data"]["list"];
+
+        for (var novel in jsonNovels) {
+          Novel newNovel = Novel(
+              title: novel["bookName"],
+              link: novel["picUrl"],
+              imgUrl: novel["picUrl"],
+              author: novel["authorName"],
+              status: novel["bookStatus"] == '0' ? "completed" : "ongoing",
+              description: novel["bookDesc"],
+              yearOfPublication: novel[""]
+          );
+          getNovels.add(newNovel);
+        }
+      }
+
+    } catch (e) {
+      print(e);
+    }
+
+    return getNovels;
+  }
   
 }
