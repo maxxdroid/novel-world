@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:novel_world/novelhi/novelhi_novel_details.dart';
 import 'package:novel_world/novelhi/novelhi_service.dart';
 
 import '../functions/caching_service.dart';
 import '../loading_states/loading_home.dart';
 import '../model/novel.dart';
 import '../novelbin/novelbin_service.dart';
-import '../pages/novelbin_deails.dart';
 
 class NovelHiHome extends StatefulWidget {
   const NovelHiHome({super.key});
@@ -189,7 +189,7 @@ class _NovelHiHomeState extends State<NovelHiHome> {
                 final novel = allNovels[index];
                 return GestureDetector(
                   onTap: () {
-                    Get.to(() => NovelBinDetails(novel: novel));
+                    Get.to(() => NovelHiNovelDetails(novel: novel));
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
