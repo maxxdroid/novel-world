@@ -24,23 +24,23 @@ class NovelHiService {
       final response = await http.get(Uri.parse("https://novelhi.com/book/searchByPageInShelf?curr=$index&limit=20&keyword="), headers: headers);
 
       if (response.statusCode == 200) {
-        // Map<dynamic, dynamic> data = response.body.;
-        // print("${data["data"]}");
 
         final jsonResponse = jsonDecode(response.body);
 
         final jsonNovels = jsonResponse["data"]["list"];
 
         for (var novel in jsonNovels) {
-          String title = novel["bookName"];
-          String link = novel["picUrl"];
-          String imageUrl = novel["picUrl"];
-
-          Novel newNovel = Novel(title: title, link: link, imgUrl: imageUrl);
+          Novel newNovel = Novel(
+            title: novel["bookName"],
+            link: novel["picUrl"],
+            imgUrl: novel["picUrl"],
+            author: novel["authorName"],
+            status: novel["bookStatus"] == '0' ? "completed" : "ongoing",
+            description: novel["bookDesc"],
+            yearOfPublication: novel[""]
+          );
           getNovels.add(newNovel);
         }
-
-        print("${jsonResponse["data"]["list"]}");
 
       }
 
