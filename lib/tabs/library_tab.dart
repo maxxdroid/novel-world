@@ -16,6 +16,7 @@ class _MyLibraryState extends State<MyLibrary> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -36,10 +37,11 @@ class _MyLibraryState extends State<MyLibrary> {
         }
         return Column(
           children: [
-            Flexible(
+            SizedBox(
               child: GridView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 itemCount: libraryController.novels.length,
+                shrinkWrap: true,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 10.0,

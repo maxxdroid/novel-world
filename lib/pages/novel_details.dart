@@ -11,7 +11,7 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../controllers/chapter_controller.dart';
 import '../controllers/library_controller.dart';
-import '../novelbin/novelbin_service.dart';
+import '../sources/novelbin/novelbin_service.dart';
 import 'chapter_details.dart';
 
 class NovelDetails extends StatefulWidget {

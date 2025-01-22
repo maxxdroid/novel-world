@@ -3,19 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:novel_world/functions/caching_service.dart';
 import 'package:novel_world/loading_states/loading_home.dart';
-import 'package:novel_world/novelbin/novelbin_service.dart';
+import 'package:novel_world/sources/novelbin/novelbin_service.dart';
 import 'package:novel_world/pages/novelbin_deails.dart';
 
-import '../model/novel.dart';
+import '../../model/novel.dart';
 
-class SourceHome extends StatefulWidget {
-  const SourceHome({super.key});
+class NovelBinHome extends StatefulWidget {
+  const NovelBinHome({super.key});
 
   @override
-  State<SourceHome> createState() => _SourceHomeState();
+  State<NovelBinHome> createState() => _NovelBinHomeState();
 }
 
-class _SourceHomeState extends State<SourceHome> {
+class _NovelBinHomeState extends State<NovelBinHome> {
   late Future<List<Novel>> novels;
   int page = 1;
   final ScrollController _scrollController = ScrollController();
