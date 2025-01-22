@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:novel_world/novelhi/novelhi_home.dart';
-import 'package:novel_world/pages/source_home.dart';
+import 'package:novel_world/consts/source_consts.dart';
+import 'package:novel_world/model/source_model.dart';
+import 'package:novel_world/sources/novelhi/novelhi_home.dart';
+import 'package:novel_world/sources/novelbin/novel_bin_home.dart';
 
 class SourceTabs extends StatefulWidget {
   const SourceTabs({super.key});
@@ -34,32 +36,21 @@ class _SourceTabsState extends State<SourceTabs> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text("Pinned"),
-            sourceWidget(width),
-            sourceWidget(width),
-            const Text("All"),
-            sourceWidget(width),
-            sourceWidget(width),
-            sourceWidget(width),
-            sourceWidget(width),
-            sourceWidget(width),
-            sourceWidget(width),
-            sourceWidget(width),
-          ],
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: sources.length,
+            itemBuilder: (context, index) {
+              return sourceWidget(width, sources[index]);
+            }
         ),
       ),
     );
   }
 
-  sourceWidget (double width) {
+  sourceWidget (double width, SourceModel source) {
     return InkWell(
       borderRadius: BorderRadius.circular(10),
-      onTap: () {
-        Get.to(() => const NovelHiHome());
-      },
+      onTap: source.onTap,
       child: Padding(
           padding: const EdgeInsets.all(10),
           child: SizedBox(
@@ -74,7 +65,7 @@ class _SourceTabsState extends State<SourceTabs> {
                       child: ClipOval(
                         child: Image.asset(
                           color: Colors.blue,
-                          "assets/images/novelbin-logo.png",
+                          source.icon,
                           height: 40,
                           width: 40, // Match height and width to ensure a circular shape
                           fit: BoxFit.cover, // Ensures the image fits well within the circle
@@ -82,11 +73,11 @@ class _SourceTabsState extends State<SourceTabs> {
                       ),
                     ),
                     const SizedBox(width: 10,),
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("NovelBin", style: TextStyle(fontWeight: FontWeight.bold),),
-                        Text("English")
+                        Text(source.name, style: const TextStyle(fontWeight: FontWeight.bold),),
+                        const Text("English")
                       ],
                     ),
                   ],
