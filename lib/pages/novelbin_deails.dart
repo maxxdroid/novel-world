@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:html/parser.dart';
 import 'package:novel_world/model/novel.dart';
-import 'package:novel_world/novelbin/novelbin_service.dart';
+import 'package:novel_world/sources/novelbin/novelbin_service.dart';
 import 'package:novel_world/pages/chapter_details.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -296,7 +296,7 @@ class _NovelBinDetailsState extends State<NovelBinDetails> with SingleTickerProv
           ),
         ],
       ),
-    );
+    ); 
   }
 
   Widget description (double width, double height, Novel newNovel) {
