@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:novel_world/functions/caching_service.dart';
 import 'package:novel_world/model/novel.dart';
-import 'package:novel_world/novelbin/novelbin_service.dart';
+import 'package:novel_world/sources/novelbin/novelbin_service.dart';
 
 import '../model/chapter.dart';
 import 'library_controller.dart';
