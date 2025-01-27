@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
@@ -41,7 +42,7 @@ class NovelBinService {
             imageUrl = novel.querySelector('img')?.attributes['src'] ?? '';
           }
 
-          Novel hotNovel = Novel(title: title, link: link, imgUrl: imageUrl);
+          Novel hotNovel = Novel(title: title, link: link, imgUrl: imageUrl, source: "Novel Bin");
 
           hotNovels.add(hotNovel);
         }
@@ -96,7 +97,9 @@ class NovelBinService {
         throw Exception('Failed to load web page');
       }
     } catch (e) {
-      print('Error fetching hot novels: $e');
+      if (kDebugMode) {
+        print('Error fetching hot novels: $e');
+      }
     }
 
     return hotNovels;
@@ -128,14 +131,16 @@ class NovelBinService {
 
           // Ensure non-empty title and link before adding to list
           if (title.isNotEmpty && link.isNotEmpty) {
-            searchNovels.add(Novel(title: title, link: link, imgUrl: imageUrl));
+            searchNovels.add(Novel(title: title, link: link, imgUrl: imageUrl, source: "Novel Bin"));
           }
         }
       } else {
         throw Exception('Failed to load web page');
       }
     } catch (e) {
-      print('Error fetching hot novels: $e');
+      if (kDebugMode) {
+        print('Error fetching hot novels: $e');
+      }
     }
     return searchNovels;
   }
@@ -403,12 +408,16 @@ class NovelBinService {
         // Extract previous chapter link
         final prevChapterElement = document.getElementById('prev_chap');
         chapter.previous = prevChapterElement?.attributes['href'];
-        print(">>>>${chapter.toJson()}");
+        if (kDebugMode) {
+          print(">>>>${chapter.toJson()}");
+        }
 
         return chapter;
       }
     } catch (e) {
-      print("Error fetching chapter content: $e");
+      if (kDebugMode) {
+        print("Error fetching chapter content: $e");
+      }
       return chapter;
     }
     return chapter;

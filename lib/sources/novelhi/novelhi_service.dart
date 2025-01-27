@@ -52,9 +52,13 @@ class NovelHiService {
 
           Novel newNovel = Novel(
             title: novel["bookName"],
-            link: "${url}s/${title.replaceAll(" ", "-").replaceAll("'", "").replaceAll(":", "")}",
+            link: "${url}s/${title
+                .replaceAll(" ", "-")
+                .replaceAll("'", "")
+                .replaceAll(":", "")}",
             imgUrl: novel["picUrl"],
             author: novel["authorName"],
+            source: "Novel Hi",
             status: novel["bookStatus"] == '0' ? "completed" : "ongoing",
             description: desc.replaceAll("<br>", "\n"),
             genres: genreList,
