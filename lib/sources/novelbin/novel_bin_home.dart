@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:novel_world/functions/caching_service.dart';
 import 'package:novel_world/loading_states/loading_home.dart';
-import 'package:novel_world/sources/novelbin/novelbin_service.dart';
 import 'package:novel_world/pages/novelbin_deails.dart';
+import 'package:novel_world/sources/novelbin/novelbin_service.dart';
 
 import '../../model/novel.dart';
 

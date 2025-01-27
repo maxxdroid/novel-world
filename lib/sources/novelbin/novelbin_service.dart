@@ -1,8 +1,8 @@
 import 'package:html/dom.dart';
+import 'package:html/parser.dart' show parse;
+import 'package:http/http.dart' as http;
 import 'package:novel_world/model/chapter.dart';
 import 'package:novel_world/model/novel.dart';
-import 'package:http/http.dart' as http;
-import 'package:html/parser.dart' show parse;
 
 class NovelBinService {
 
