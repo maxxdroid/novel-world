@@ -11,6 +11,7 @@ class Novel {
   String? status;
   String? publisher;
   String? tags;
+  String? source;
   String? yearOfPublication;
   String? link;
   Color? color;
@@ -32,6 +33,7 @@ class Novel {
     this.status,
     this.publisher,
     this.tags,
+    this.source,
     this.yearOfPublication,
     this.link,
     this.color,
@@ -90,6 +92,7 @@ class Novel {
       "imgUrl": imgUrl,
       "link": link,
       "genres": genres,
+      "source": source,
       "description": description,
       "lastReadChapter": lastReadChapter?.toJson(),
       "author": author,
@@ -105,6 +108,7 @@ class Novel {
     return other is Novel &&
         other.title == title &&
         other.imgUrl == imgUrl &&
+        other.source == source &&
         other.link == link;
   }
 
@@ -124,6 +128,7 @@ class Novel {
     String? status,
     String? publisher,
     String? tags,
+    String? source,
     String? yearOfPublication,
     String? link,
     Color? color,
@@ -143,6 +148,7 @@ class Novel {
       description: description ?? this.description,
       genres: genres ?? this.genres,
       status: status ?? this.status,
+      source: source ?? this.source,
       publisher: publisher ?? this.publisher,
       tags: tags ?? this.tags,
       yearOfPublication: yearOfPublication ?? this.yearOfPublication,
