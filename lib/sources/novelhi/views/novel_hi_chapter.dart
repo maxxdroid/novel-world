@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:novel_world/sources/novelhi/novelhi_service.dart';
+import 'package:novel_world/sources/novelhi/services/novelhi_service.dart';
 
-import '../../model/chapter.dart';
-import '../../model/novel.dart';
+import '../../../model/chapter.dart';
+import '../../../model/novel.dart';
 
 
 class NovelHiChapter extends StatefulWidget {
