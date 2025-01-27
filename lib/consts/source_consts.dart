@@ -1,6 +1,6 @@
 import 'package:novel_world/model/source_model.dart';
 import 'package:get/get.dart';
-import 'package:novel_world/sources/novelbin/views/novel_bin_home.dart';
+import 'package:novel_world/sources/novelbin/novel_bin_home.dart';
 
 import '../sources/novelhi/views/novelhi_home.dart';
 

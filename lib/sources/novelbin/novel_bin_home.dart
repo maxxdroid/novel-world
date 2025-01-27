@@ -6,7 +6,7 @@ import 'package:novel_world/loading_states/loading_home.dart';
 import 'package:novel_world/pages/novelbin_deails.dart';
 import 'package:novel_world/sources/novelbin/services/novelbin_service.dart';
 
-import '../../../model/novel.dart';
+import '../../model/novel.dart';
 
 class NovelBinHome extends StatefulWidget {
   const NovelBinHome({super.key});
