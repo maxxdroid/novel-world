@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:html/dom.dart';
-import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
+import 'package:http/http.dart' as http;
 import 'package:novel_world/functions/novel_functions.dart';
 import 'package:novel_world/model/chapter.dart';
 import 'package:novel_world/model/novel.dart';
@@ -72,12 +72,39 @@ class NovelHiService {
     return getNovels;
   }
 
+  Future<Chapter> getChapter(Chapter chapter) async {
+    try {
+      final response = await http.get(Uri.parse(chapter.link), headers: headers);
+
+      if (response.statusCode == 200) {
+        Document doc = parse(response.body);
+        var news = doc.querySelector(".readBox");
+        // Clean and extract the content
+        String? content = news?.innerHtml
+            .replaceAll(RegExp(r'<script.*?>.*?</script>', dotAll: true), '') // Remove all script tags
+            .replaceAll(RegExp(r'<ins.*?>.*?</ins>', dotAll: true), '') // Remove <ins> tags (ads)
+            .replaceAll(RegExp(r'<iframe.*?>.*?</iframe>', dotAll: true), '') // Remove <iframe> tags
+            .replaceAll(RegExp(r'<div[^>]*id=".*?"[^>]*></div>', dotAll: true), '') // Remove specific empty divs
+            .replaceAll(RegExp(r'<div[^>]*></div>', dotAll: true), '') // Remove generic empty divs
+            .replaceAll('<br>', '\n') // Replace <br> with newlines
+            .replaceAll(RegExp(r'<.*?>'), '') // Remove all remaining HTML tags
+            .trim();
+
+        chapter.content = content;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return chapter;
+  }
+
   Future<Novel> getChapters (Novel novel) async {
     List<Chapter> chapters = [];
 
     String url = novelFunction.getNovelHiUrl(novel.link ?? "");
 
-    print(url);
 
     try {
       final response = await http.get(Uri.parse(url), headers: headers);
