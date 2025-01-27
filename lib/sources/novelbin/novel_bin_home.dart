@@ -155,6 +155,7 @@ class _NovelBinHomeState extends State<NovelBinHome> {
                 : GridView.builder(
                     controller: _scrollController,
                     padding: const EdgeInsets.symmetric(horizontal: 10),
+                    shrinkWrap: true,
                     itemCount: allNovels.length + (isLoading ? 1 : 0),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
