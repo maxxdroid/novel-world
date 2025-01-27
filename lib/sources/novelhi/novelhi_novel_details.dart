@@ -1,11 +1,7 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:html/parser.dart';
 import 'package:novel_world/model/novel.dart';
-import 'package:novel_world/pages/chapter_details.dart';
+import 'package:novel_world/sources/novelhi/novel_hi_chapter.dart';
 import 'package:novel_world/sources/novelhi/novelhi_service.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -234,7 +230,7 @@ class _NovelHiNovelDetailsState extends State<NovelHiNovelDetails> with SingleTi
                                             ),
                                             child: ListTile(
                                               onTap: () {
-                                                Get.to(() => ChapterDetails(chapter: novel.chapters![index], novel: novel,));
+                                                Get.to(() => NovelHiChapter(chapter: novel.chapters![index], novel: novel,));
                                               },
                                               title: Text(
                                                 novel.chapters?[index].title ?? "",
