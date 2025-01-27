@@ -5,6 +5,20 @@ import '../model/novel.dart';
 
 class NovelFunction {
 
+  String getNovelHiUrl(String url) {
+    Uri uri = Uri.parse(url);
+
+    // Modify the path
+    String modifiedPath = uri.path.replaceFirst('/s/', '/s/index/');
+
+    // Build the new URI
+    Uri modifiedUri = uri.replace(path: modifiedPath);
+
+    // Get the new URL as a string
+    return modifiedUri.toString();
+  }
+
+
   Novel updateNovelWithChanges(Novel oldNovel, Novel newNovel) {
     // Update fields only if they have new values in the newNovel
     return oldNovel.copyWith(
