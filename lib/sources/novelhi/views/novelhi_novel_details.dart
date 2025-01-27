@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:novel_world/model/novel.dart';
-import 'package:novel_world/sources/novelhi/novel_hi_chapter.dart';
-import 'package:novel_world/sources/novelhi/novelhi_service.dart';
+import 'package:novel_world/sources/novelhi/views/novel_hi_chapter.dart';
+import 'package:novel_world/sources/novelhi/services/novelhi_service.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../controllers/library_controller.dart';
+import '../../../controllers/library_controller.dart';
 
 class NovelHiNovelDetails extends StatefulWidget {
   final Novel novel;
