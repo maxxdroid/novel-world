@@ -53,7 +53,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
         novel = Future.value(newNovel);
         loading = false;
       });
-      int? newChapters = novelWithChapters?.chapters?.length;
+      int? newChapters = novelWithChapters.chapters?.length;
 
       // if(newChapters! >= chapters! && check) {
       //   check = false;
