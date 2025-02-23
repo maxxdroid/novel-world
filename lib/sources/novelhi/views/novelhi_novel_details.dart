@@ -7,6 +7,7 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../controllers/library_controller.dart';
+import '../../../model/realm_novel.dart';
 
 class NovelHiNovelDetails extends StatefulWidget {
   final Novel novel;
@@ -79,7 +80,7 @@ class _NovelHiNovelDetailsState extends State<NovelHiNovelDetails> with SingleTi
                             } else if (snapshot.hasData) {
                               Color c = snapshot.data!.lightMutedColor?.color != null ? snapshot.data!.lightMutedColor!.color: Colors.grey;
                               color = c;
-                              novel?.color = c;
+                              // novel?.color = c;
                               return Container(
                                 color: c,
                                 height: height,
