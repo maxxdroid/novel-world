@@ -9,6 +9,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../controllers/chapter_controller.dart';
 import '../../../controllers/library_controller.dart';
+import '../../../model/realm_novel.dart';
 import '../../../pages/chapter_details.dart';
 import '../services/novelhi_service.dart';
 
@@ -21,7 +22,7 @@ class NovelHiOffline extends StatefulWidget {
 }
 
 class _NovelHiOfflineState extends State<NovelHiOffline> with SingleTickerProviderStateMixin{
-  final NovelFunction func = NovelFunction();
+  // final NovelFunction func = NovelFunction();
   bool loading = true;
   bool isDescriptionExpanded = false; // For toggling description
   bool ascending = false; // For toggling sorting
@@ -54,7 +55,7 @@ class _NovelHiOfflineState extends State<NovelHiOffline> with SingleTickerProvid
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: widget.novel.color,
+      // backgroundColor: widget.novel.color,
       body: Stack(
         children: [
           SizedBox(
@@ -103,7 +104,7 @@ class _NovelHiOfflineState extends State<NovelHiOffline> with SingleTickerProvid
               } else if (snapshot.hasData) {
                 Color c = snapshot.data!.lightMutedColor?.color != null ? snapshot.data!.lightMutedColor!.color: Colors.grey;
                 color = c;
-                novel.color = c;
+                // novel.color = c;
                 return Container(
                   color: c,
                   height: height,
@@ -268,10 +269,10 @@ class _NovelHiOfflineState extends State<NovelHiOffline> with SingleTickerProvid
                               ),
                               child: ListTile(
                                 onTap: () {
-                                  Get.to(() => NovelHiChapter(chapter: novel.chapters![index], novel: novel,));
+                                  Get.to(() => NovelHiChapter(chapter: novel.chapters[index], novel: novel,));
                                 },
                                 title: Text(
-                                  novel.chapters?[index].title ?? "",
+                                  novel.chapters[index].title ?? "",
                                   style: const TextStyle(fontSize: 14),
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -296,14 +297,14 @@ class _NovelHiOfflineState extends State<NovelHiOffline> with SingleTickerProvid
   Widget localNovelDetails (double width, double height, Novel novel) {
     return Stack(
       children: [
-        Positioned(
-            top: 0,
-            child: Container(
-              color: novel.color,
-              height: height,
-              width: width,
-            )
-        ),
+        // Positioned(
+        //     top: 0,
+        //     child: Container(
+        //       color: novel.color,
+        //       height: height,
+        //       width: width,
+        //     )
+        // ),
         Positioned(
           top: 0,
           child: Image.network(
