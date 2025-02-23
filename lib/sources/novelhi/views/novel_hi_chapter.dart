@@ -5,6 +5,8 @@ import 'package:novel_world/sources/novelhi/services/novelhi_service.dart';
 
 import '../../../model/chapter.dart';
 import '../../../model/novel.dart';
+import '../../../model/realm_chapter.dart';
+import '../../../model/realm_novel.dart';
 
 
 class NovelHiChapter extends StatefulWidget {
@@ -136,7 +138,7 @@ class _NovelHiChapterState extends State<NovelHiChapter> {
                 setState(() {
                   Chapter? prev = widget.novel.chapters?[widget.chapter.number-2];
                   if (kDebugMode) {
-                    print(prev?.toJson());
+                    print(prev?.toEJson());
                   }
                   if (prev != null) {
                     widget.chapter.link = prev.link;
@@ -154,7 +156,7 @@ class _NovelHiChapterState extends State<NovelHiChapter> {
                 setState(() {
                   Chapter? next = widget.novel.chapters?[widget.chapter.number];
                   if (kDebugMode) {
-                    print(next?.toJson());
+                    print(next?.toEJson());
                   }
                   if (next != null) {
                     widget.chapter.link = next.link;
