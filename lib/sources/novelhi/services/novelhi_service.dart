@@ -7,6 +7,10 @@ import 'package:http/http.dart' as http;
 import 'package:novel_world/functions/novel_functions.dart';
 import 'package:novel_world/model/chapter.dart';
 import 'package:novel_world/model/novel.dart';
+import 'package:realm/realm.dart';
+
+import '../../../model/realm_chapter.dart';
+import '../../../model/realm_novel.dart';
 
 class NovelHiService {
   final NovelFunction novelFunction = NovelFunction();
@@ -51,13 +55,13 @@ class NovelHiService {
           }
 
           Novel newNovel = Novel(
-            title: novel["bookName"],
-            link: "${url}s/${title
-                .replaceAll(" ", "-")
-                .replaceAll("'", "")
-                .replaceAll(":", "")}",
-            imgUrl: novel["picUrl"],
-            author: novel["authorName"],
+              "${url}s/${title
+                  .replaceAll(" ", "-")
+                  .replaceAll("'", "")
+                  .replaceAll(":", "")}",
+            novel["bookName"],
+            novel["picUrl"],
+            novel["authorName"],
             source: "Novel Hi",
             status: novel["bookStatus"] == '0' ? "completed" : "ongoing",
             description: desc.replaceAll("<br>", "\n"),
@@ -145,9 +149,11 @@ class NovelHiService {
             }
 
             Chapter chapter =Chapter(
-                number: number ?? 0,
-                title: chapterText,
-                link: "${novel.link}/$number"
+              "${novel.link}/$number",
+              chapterText,
+              false,
+              number ?? 0,
+              false
             );
             chapters.add(chapter);
           }
@@ -158,7 +164,7 @@ class NovelHiService {
         print(e);
       }
     }
-    novel.chapters = chapters;
+    novel.chapters = RealmList<Chapter>.new(chapters);
 
     return novel;
   }
@@ -193,15 +199,16 @@ class NovelHiService {
           }
 
           Novel newNovel = Novel(
-              title: novel["bookName"],
-              link: "${url}s/${title.replaceAll(" ", "-")}",
-              imgUrl: novel["picUrl"],
-              author: novel["authorName"],
-              status: novel["bookStatus"] == '0' ? "completed" : "ongoing",
-              description: desc.replaceAll("<br>", "\n"),
-              genres: genreList,
-              yearOfPublication: novel[""]
+            "${url}s/${title.replaceAll(" ", "-")}", // link (positional)
+            novel["bookName"], // title (positional)
+            novel["picUrl"], // imgUrl (positional)
+            novel["authorName"], // author (positional)
+            status: novel["bookStatus"] == '0' ? "completed" : "ongoing",
+            description: desc.replaceAll("<br>", "\n"),
+            genres: genreList,
+            yearOfPublication: novel["yearOfPublication"], // Ensure you have the correct key
           );
+
           getNovels.add(newNovel);
         }
       }
