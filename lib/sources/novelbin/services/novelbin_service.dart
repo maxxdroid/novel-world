@@ -4,6 +4,10 @@ import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
 import 'package:novel_world/model/chapter.dart';
 import 'package:novel_world/model/novel.dart';
+import 'package:realm/realm.dart';
+
+import '../../../model/realm_chapter.dart';
+import '../../../model/realm_novel.dart';
 
 class NovelBinService {
 
@@ -42,7 +46,13 @@ class NovelBinService {
             imageUrl = novel.querySelector('img')?.attributes['src'] ?? '';
           }
 
-          Novel hotNovel = Novel(title: title, link: link, imgUrl: imageUrl, source: "Novel Bin");
+          Novel hotNovel = Novel(
+              link,
+              title,
+              imageUrl,
+              "",
+              source: "Novel Bin"
+          );
 
           hotNovels.add(hotNovel);
         }
@@ -90,7 +100,15 @@ class NovelBinService {
 
           // Ensure non-empty title and link before adding to list
           if (title.isNotEmpty && link.isNotEmpty) {
-            hotNovels.add(Novel(title: title, link: link, imgUrl: imageUrl));
+            hotNovels.add(
+                Novel(
+                link,
+                title,
+                imageUrl,
+                "",
+                source: "Novel Bin"
+                )
+            );
           }
         }
       } else {
@@ -131,7 +149,14 @@ class NovelBinService {
 
           // Ensure non-empty title and link before adding to list
           if (title.isNotEmpty && link.isNotEmpty) {
-            searchNovels.add(Novel(title: title, link: link, imgUrl: imageUrl, source: "Novel Bin"));
+            searchNovels.add(
+                Novel(
+                    link,
+                    title,
+                    imageUrl,
+                    "",
+                    source: "Novel Bin")
+            );
           }
         }
       } else {
@@ -242,10 +267,20 @@ class NovelBinService {
           String chapterLink = chapter.attributes['href'] ?? '';
 
           // Add to list of chapters
-          allChapters.add(Chapter(title: chapterTitle, link: chapterLink, number: index));
+          allChapters.add(
+              Chapter(
+                  chapterLink,
+                  chapterTitle,
+                  false,
+                  index,
+                  false
+              )
+          );
+
           index++;
         }
-        novel.chapters = allChapters;
+
+        novel.chapters = RealmList<Chapter>.new(allChapters);
         return novel;
 
       } else {
@@ -348,11 +383,18 @@ class NovelBinService {
           String chapterLink = chapter.attributes['href'] ?? '';
 
           // Add to list of chapters
-          allChapters.add(Chapter(title: chapterTitle, link: chapterLink, number: index));
+          allChapters.add(
+              Chapter(
+                  chapterLink,
+                  chapterTitle,
+                  false,
+                  index,
+                  false
+              ));
 
           index ++;
         }
-        novel.chapters = allChapters;
+        novel.chapters = RealmList<Chapter>.new(allChapters);
         return novel;
 
     } catch (e) {
@@ -409,7 +451,7 @@ class NovelBinService {
         final prevChapterElement = document.getElementById('prev_chap');
         chapter.previous = prevChapterElement?.attributes['href'];
         if (kDebugMode) {
-          print(">>>>${chapter.toJson()}");
+          print(">>>>${chapter.toEJson()}");
         }
 
         return chapter;
