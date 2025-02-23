@@ -11,6 +11,7 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../controllers/chapter_controller.dart';
 import '../../controllers/library_controller.dart';
+import '../../model/realm_novel.dart';
 import 'services/novelbin_service.dart';
 import '../../pages/chapter_details.dart';
 
@@ -47,13 +48,13 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
       var dom = parse(jsonString);
 
       Novel? novelWithChapters = await NovelBinService().getChaptersFromDocument(widget.novel, dom);
-      Novel newNovel = func.updateNovelWithChanges(novelWithChapters!, widget.novel);
+      // Novel newNovel = func.updateNovelWithChanges(novelWithChapters!, widget.novel);
 
-      setState(() {
-        novel = Future.value(newNovel);
-        loading = false;
-      });
-      int? newChapters = novelWithChapters.chapters?.length;
+      // setState(() {
+      //   novel = Future.value(newNovel);
+      //   loading = false;
+      // });
+      // int? newChapters = novelWithChapters.chapters?.length;
 
       // if(newChapters! >= chapters! && check) {
       //   check = false;
@@ -94,7 +95,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: widget.novel.color,
+      // backgroundColor: widget.novel.color,
       body: Stack(
         children: [
           SizedBox(
@@ -150,7 +151,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
               } else if (snapshot.hasData) {
                 Color c = snapshot.data!.lightMutedColor?.color != null ? snapshot.data!.lightMutedColor!.color: Colors.grey;
                 color = c;
-                novel.color = c;
+                // novel.color = c;
                 return Container(
                   color: c,
                   height: height,
@@ -347,7 +348,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
         Positioned(
           top: 0,
           child: Container(
-            color: novel.color,
+            // color: novel.color,
             height: height,
             width: width,
           )
