@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:novel_world/model/novel.dart';
 
+import '../model/realm_novel.dart';
+
 class NovelDescription extends StatelessWidget {
   final Novel novel;
   final bool inLibrary;
