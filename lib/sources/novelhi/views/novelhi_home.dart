@@ -7,6 +7,7 @@ import 'package:novel_world/sources/novelhi/services/novelhi_service.dart';
 import '../../../functions/caching_service.dart';
 import '../../../loading_states/loading_home.dart';
 import '../../../model/novel.dart';
+import '../../../model/realm_novel.dart';
 import '../../novelbin/services/novelbin_service.dart';
 
 class NovelHiHome extends StatefulWidget {
