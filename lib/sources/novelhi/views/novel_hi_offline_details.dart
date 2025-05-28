@@ -14,7 +14,7 @@ import '../../../pages/chapter_details.dart';
 import '../services/novelhi_service.dart';
 
 class NovelHiOffline extends StatefulWidget {
-  final Novel novel;
+  final NovelModel novel;
   const NovelHiOffline({super.key, required this.novel});
 
   @override
@@ -28,11 +28,11 @@ class _NovelHiOfflineState extends State<NovelHiOffline> with SingleTickerProvid
   bool ascending = false; // For toggling sorting
   bool inLibrary = false;
   bool check = true;
-  late Future<Novel?> novel;
+  late Future<NovelModel?> novel;
   late Color color;
-  late Novel localNovel;
+  late NovelModel localNovel;
   final LibraryController libraryController = Get.put(LibraryController());
-  final ChapterController chapterController = Get.put(ChapterController());
+  // final ChapterController chapterController = Get.put(ChapterController());
   late TabController tabController;
 
   @override
@@ -60,7 +60,7 @@ class _NovelHiOfflineState extends State<NovelHiOffline> with SingleTickerProvid
         children: [
           SizedBox(
             height: height,
-            child: FutureBuilder<Novel?>(
+            child: FutureBuilder<NovelModel?>(
               initialData: widget.novel,
               future: novel,
               builder: (context, snapshot) {
@@ -91,7 +91,7 @@ class _NovelHiOfflineState extends State<NovelHiOffline> with SingleTickerProvid
   }
 
 
-  Widget novelDetails (Future<PaletteGenerator> Function() updatePalette, double width, double height, Novel novel) {
+  Widget novelDetails (Future<PaletteGenerator> Function() updatePalette, double width, double height, NovelModel novel) {
     return Stack(
       children: [
         Positioned(
@@ -234,7 +234,7 @@ class _NovelHiOfflineState extends State<NovelHiOffline> with SingleTickerProvid
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    chapterController.downloadNovel(novel);
+                                    // chapterController.downloadNovel(novel);
                                   },
                                   child: const Icon(Icons.download),
                                 ),
@@ -269,10 +269,10 @@ class _NovelHiOfflineState extends State<NovelHiOffline> with SingleTickerProvid
                               ),
                               child: ListTile(
                                 onTap: () {
-                                  Get.to(() => NovelHiChapter(chapter: novel.chapters[index], novel: novel,));
+                                  Get.to(() => NovelHiChapter(chapter: novel.chapters![index], novel: novel,));
                                 },
                                 title: Text(
-                                  novel.chapters[index].title ?? "",
+                                  novel.chapters?[index].title ?? "",
                                   style: const TextStyle(fontSize: 14),
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -294,7 +294,7 @@ class _NovelHiOfflineState extends State<NovelHiOffline> with SingleTickerProvid
     );
   }
 
-  Widget localNovelDetails (double width, double height, Novel novel) {
+  Widget localNovelDetails (double width, double height, NovelModel novel) {
     return Stack(
       children: [
         // Positioned(
@@ -480,7 +480,7 @@ class _NovelHiOfflineState extends State<NovelHiOffline> with SingleTickerProvid
     );
   }
 
-  Widget description (double width, double height, Novel newNovel) {
+  Widget description (double width, double height, NovelModel newNovel) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       width: width,// Fixed height when collapsed

@@ -16,7 +16,7 @@ import 'services/novelbin_service.dart';
 import '../../pages/chapter_details.dart';
 
 class NovelDetails extends StatefulWidget {
-  final Novel novel;
+  final NovelModel novel;
   const NovelDetails({super.key, required this.novel});
 
   @override
@@ -31,11 +31,11 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
   bool ascending = false; // For toggling sorting
   bool inLibrary = false;
   bool check = true;
-  late Future<Novel?> novel;
+  late Future<NovelModel?> novel;
   late Color color;
-  late Novel localNovel;
+  late NovelModel localNovel;
   final LibraryController libraryController = Get.put(LibraryController());
-  final ChapterController chapterController = Get.put(ChapterController());
+  // final ChapterController chapterController = Get.put(ChapterController());
   late TabController tabController;
 
 
@@ -47,7 +47,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
       var jsonString = json.decode(doc);
       var dom = parse(jsonString);
 
-      Novel? novelWithChapters = await NovelBinService().getChaptersFromDocument(widget.novel, dom);
+      NovelModel? novelWithChapters = await NovelBinService().getChaptersFromDocument(widget.novel, dom);
       // Novel newNovel = func.updateNovelWithChanges(novelWithChapters!, widget.novel);
 
       // setState(() {
@@ -107,7 +107,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
           ),
           SizedBox(
             height: height,
-            child: FutureBuilder<Novel?>(
+            child: FutureBuilder<NovelModel?>(
               initialData: widget.novel,
               future: novel,
               builder: (context, snapshot) {
@@ -138,7 +138,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
   }
 
 
-  Widget novelDetails (Future<PaletteGenerator> Function() updatePalette, double width, double height, Novel novel) {
+  Widget novelDetails (Future<PaletteGenerator> Function() updatePalette, double width, double height, NovelModel novel) {
     return Stack(
       children: [
         Positioned(
@@ -281,7 +281,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    chapterController.downloadNovel(novel);
+                                    // chapterController.downloadNovel(novel);
                                   },
                                   child: const Icon(Icons.download),
                                 ),
@@ -342,7 +342,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
     );
   }
 
-  Widget localNovelDetails (double width, double height, Novel novel) {
+  Widget localNovelDetails (double width, double height, NovelModel novel) {
     return Stack(
       children: [
         Positioned(
@@ -528,7 +528,7 @@ class _NovelDetailsState extends State<NovelDetails> with SingleTickerProviderSt
     );
   }
 
-  Widget description (double width, double height, Novel newNovel) {
+  Widget description (double width, double height, NovelModel newNovel) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       width: width,// Fixed height when collapsed

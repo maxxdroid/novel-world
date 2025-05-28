@@ -7,8 +7,8 @@ import '../model/chapter.dart';
 import '../model/novel.dart';
 
 class ChapterDetails extends StatefulWidget {
-  final Chapter chapter;
-  final Novel novel;
+  final ChapterModel chapter;
+  final NovelModel novel;
   const ChapterDetails({super.key, required this.chapter, required this.novel});
 
   @override
@@ -16,7 +16,7 @@ class ChapterDetails extends StatefulWidget {
 }
 
 class _ChapterDetailsState extends State<ChapterDetails> {
-  late Future<Chapter> chapter;
+  late Future<ChapterModel> chapter;
   bool _isAppBarVisible = false;
   late String next;
   late String prev;
@@ -63,7 +63,7 @@ class _ChapterDetailsState extends State<ChapterDetails> {
           _onScroll(notification);
           return true;
         },
-        child: FutureBuilder<Chapter>(
+        child: FutureBuilder<ChapterModel>(
           future: chapter,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -92,7 +92,7 @@ class _ChapterDetailsState extends State<ChapterDetails> {
     );
   }
 
-  Widget chapterCard (Chapter chapter, double width) {
+  Widget chapterCard (ChapterModel chapter, double width) {
     return SingleChildScrollView(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 60),
       child: Column(

@@ -1,7 +1,8 @@
 import 'dart:ui';
 import 'package:novel_world/model/chapter.dart';
+import 'package:novel_world/model/realm_novel.dart';
 
-class Novel {
+class NovelModel {
   String? title;
   String? imgUrl;
   String? author;
@@ -20,10 +21,10 @@ class Novel {
   String? type;
   String? latestChapter;
   String? latestChapterUrl;
-  Chapter? lastReadChapter;
-  List<Chapter>? chapters;
+  ChapterModel? lastReadChapter;
+  List<ChapterModel>? chapters;
 
-  Novel({
+  NovelModel({
     this.title,
     this.imgUrl,
     this.author,
@@ -46,6 +47,30 @@ class Novel {
     this.chapters,
   });
 
+  Novel getNovel () {
+    return Novel(
+        link ?? "",
+        title ?? "",
+        imgUrl ?? "",
+        author ?? "",
+      alternativeNames:  alternativeNames,
+      description:  description,
+      genres:  genres,
+      status:  status,
+      publisher:  publisher,
+      complete: complete,
+      source: source,
+      tags: tags,
+      yearOfPublication: yearOfPublication,
+      lastUpdated: lastUpdated,
+      type: type,
+      latestChapter: latestChapter,
+      latestChapterUrl: latestChapterUrl,
+      lastReadChapter: lastReadChapter?.getChapter(),
+      chapters: chapters?.map((chap) => chap.getChapter()).toList() ?? []
+    );
+  }
+
   // Convert a Color object to its integer representation for JSON serialization
   static int? colorToInt(Color? color) {
     return color?.value;
@@ -57,19 +82,19 @@ class Novel {
     return Color(colorInt);
   }
 
-  factory Novel.fromJson(Map<String, dynamic> json) {
-    return Novel(
+  factory NovelModel.fromJson(Map<String, dynamic> json) {
+    return NovelModel(
       title: json["title"] ?? '',
       description: json["description"],
       genres: json["genres"],
       link: json["link"] ?? '',
       lastReadChapter: json["lastReadChapter"] != null
-          ? Chapter.fromJson(json["lastReadChapter"])
+          ? ChapterModel.fromJson(json["lastReadChapter"])
           : null,
       chapters: (json["chapters"] as List<dynamic>?)
           ?.map((item) {
         try {
-          var chap = Chapter.fromJson(item as Map<String, dynamic>);
+          var chap = ChapterModel.fromJson(item as Map<String, dynamic>);
           if (chap.content != null) {
           }
 
@@ -78,7 +103,7 @@ class Novel {
           print("Error decoding chapter: $item, Error: $e");
           return null;
         }
-      }).whereType<Chapter>() // Filter out invalid chapters
+      }).whereType<ChapterModel>() // Filter out invalid chapters
           .toList(),
       imgUrl: json["imgUrl"] ?? '',
       color: intToColor(json["color"]),
@@ -105,7 +130,7 @@ class Novel {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Novel &&
+    return other is NovelModel &&
         other.title == title &&
         other.imgUrl == imgUrl &&
         other.source == source &&
@@ -118,7 +143,7 @@ class Novel {
   }
 
   // CopyWith Method
-  Novel copyWith({
+  NovelModel copyWith({
     String? title,
     String? imgUrl,
     String? author,
@@ -137,10 +162,10 @@ class Novel {
     String? type,
     String? latestChapter,
     String? latestChapterUrl,
-    Chapter? lastReadChapter,
-    List<Chapter>? chapters,
+    ChapterModel? lastReadChapter,
+    List<ChapterModel>? chapters,
   }) {
-    return Novel(
+    return NovelModel(
       title: title ?? this.title,
       imgUrl: imgUrl ?? this.imgUrl,
       author: author ?? this.author,

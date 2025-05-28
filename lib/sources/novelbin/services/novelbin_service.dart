@@ -71,8 +71,8 @@ class NovelBinService {
     return originalUrl.replaceAll('novel_200_89/', 'novel/');
   }
 
-  Future<List<Novel>> getAllHotNovels(int page) async {
-    List<Novel> hotNovels = [];// Set the URL accordingly
+  Future<List<NovelModel>> getAllHotNovels(int page) async {
+    List<NovelModel> hotNovels = [];// Set the URL accordingly
 
     try {
       // Make the HTTP request
@@ -101,13 +101,12 @@ class NovelBinService {
           // Ensure non-empty title and link before adding to list
           if (title.isNotEmpty && link.isNotEmpty) {
             hotNovels.add(
-                Novel(
-                link,
-                title,
-                imageUrl,
-                "",
+              NovelModel(
+                imgUrl: imageUrl,
+                title: title,
+                link: link,
                 source: "Novel Bin"
-                )
+              )
             );
           }
         }
@@ -123,8 +122,8 @@ class NovelBinService {
     return hotNovels;
   }
 
-  Future<List<Novel>> searchNovels(String keyWord) async {
-    List<Novel> searchNovels = [];
+  Future<List<NovelModel>> searchNovels(String keyWord) async {
+    List<NovelModel> searchNovels = [];
     try {
       final response = await http.get(Uri.parse("${url}search?keyword=$keyWord"));
       if (response.statusCode == 200) {
@@ -150,12 +149,12 @@ class NovelBinService {
           // Ensure non-empty title and link before adding to list
           if (title.isNotEmpty && link.isNotEmpty) {
             searchNovels.add(
-                Novel(
-                    link,
-                    title,
-                    imageUrl,
-                    "",
-                    source: "Novel Bin")
+                NovelModel(
+                    imgUrl: imageUrl,
+                    title: title,
+                    link: link,
+                    source: "Novel Bin"
+                )
             );
           }
         }
@@ -171,8 +170,8 @@ class NovelBinService {
   }
 
 
-  Future<Novel?> getChapters (Novel novel) async {
-    List<Chapter> allChapters = [];
+  Future<NovelModel?> getChapters (NovelModel novel) async {
+    List<ChapterModel> allChapters = [];
 
     String chapterUrl = "${novel.link}#tab-chapters-title";
 
@@ -267,20 +266,28 @@ class NovelBinService {
           String chapterLink = chapter.attributes['href'] ?? '';
 
           // Add to list of chapters
+          // allChapters.add(
+          //     Chapter(
+          //         chapterLink,
+          //         chapterTitle,
+          //         false,
+          //         index,
+          //         false
+          //     )
+          // );
+
           allChapters.add(
-              Chapter(
-                  chapterLink,
-                  chapterTitle,
-                  false,
-                  index,
-                  false
+              ChapterModel(
+                  number: index,
+                  title: chapterTitle,
+                  link: chapterLink,
               )
           );
 
-          index++;
         }
 
-        novel.chapters = RealmList<Chapter>.new(allChapters);
+        // novel.chapters = RealmList<Chapter>.new(allChapters);
+        novel.chapters = allChapters;
         return novel;
 
       } else {
@@ -295,8 +302,8 @@ class NovelBinService {
 
   }
 
-  Future<Novel?> getChaptersFromDocument (Novel novel, Document doc) async {
-    List<Chapter> allChapters = [];
+  Future<NovelModel?> getChaptersFromDocument (NovelModel novel, Document doc) async {
+    List<ChapterModel> allChapters = [];
 
     try {
 
@@ -382,19 +389,31 @@ class NovelBinService {
           String chapterTitle = chapter.text.trim();
           String chapterLink = chapter.attributes['href'] ?? '';
 
-          // Add to list of chapters
+          // // Add to list of chapters
+          // allChapters.add(
+          //     Chapter(
+          //         chapterLink,
+          //         chapterTitle,
+          //         false,
+          //         index,
+          //         false
+          //     )
+          // );
+          //
           allChapters.add(
-              Chapter(
-                  chapterLink,
-                  chapterTitle,
-                  false,
-                  index,
-                  false
-              ));
+              ChapterModel(
+                  number: index,
+                  title: chapterTitle,
+                  link: chapterLink,
+                  read: false
+              )
+          );
+
 
           index ++;
         }
-        novel.chapters = RealmList<Chapter>.new(allChapters);
+        novel.chapters = allChapters;
+        // novel.chapters = RealmList<Chapter>.new(allChapters);
         return novel;
 
     } catch (e) {
@@ -403,7 +422,7 @@ class NovelBinService {
     return null;
   }
 
-  Future<Chapter> getChapterContent(Chapter chapter) async {
+  Future<ChapterModel> getChapterContent(ChapterModel chapter) async {
     try {
       final response = await http.get(Uri.parse(chapter.link));
       if (response.statusCode == 200) {

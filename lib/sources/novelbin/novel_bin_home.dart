@@ -17,10 +17,10 @@ class NovelBinHome extends StatefulWidget {
 }
 
 class _NovelBinHomeState extends State<NovelBinHome> {
-  late Future<List<Novel>> novels;
+  late Future<List<NovelModel>> novels;
   int page = 1;
   final ScrollController _scrollController = ScrollController();
-  List<Novel> allNovels = [];
+  List<NovelModel> allNovels = [];
   bool isLoading = false;
   bool isInitialLoading = true; // To track the initial load state
   bool isSearch = false;

@@ -16,7 +16,6 @@ class _MyLibraryState extends State<MyLibrary> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

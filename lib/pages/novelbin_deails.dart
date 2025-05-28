@@ -12,7 +12,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../controllers/library_controller.dart';
 
 class NovelBinDetails extends StatefulWidget {
-  final Novel novel;
+  final NovelModel novel;
   const NovelBinDetails({super.key, required this.novel});
 
   @override
@@ -25,8 +25,8 @@ class _NovelBinDetailsState extends State<NovelBinDetails> with SingleTickerProv
   bool isDescriptionExpanded = false; // For toggling description
   bool ascending = false; // For toggling sorting
   bool inLibrary = false;
-  Novel? updatedNovel;
-  late Future<Novel?> novel;
+  NovelModel? updatedNovel;
+  late Future<NovelModel?> novel;
   late Color color;
   final LibraryController libraryController = Get.put(LibraryController());
   late TabController tabController;
@@ -39,7 +39,7 @@ class _NovelBinDetailsState extends State<NovelBinDetails> with SingleTickerProv
       var jsonString = json.decode(doc);
       var dom = parse(jsonString);
 
-      Novel? novelWithChapters = await NovelBinService().getChaptersFromDocument(widget.novel, dom);
+      NovelModel? novelWithChapters = await NovelBinService().getChaptersFromDocument(widget.novel, dom);
 
       setState(() {
         updatedNovel = novelWithChapters;
@@ -84,7 +84,7 @@ class _NovelBinDetailsState extends State<NovelBinDetails> with SingleTickerProv
           ),
           SizedBox(
             height: height,
-            child: FutureBuilder<Novel?>(
+            child: FutureBuilder<NovelModel?>(
               initialData: widget.novel,
               future: novel,
               builder: (context, snapshot) {
@@ -299,7 +299,7 @@ class _NovelBinDetailsState extends State<NovelBinDetails> with SingleTickerProv
     ); 
   }
 
-  Widget description (double width, double height, Novel newNovel) {
+  Widget description (double width, double height, NovelModel newNovel) {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         width: width,// Fixed height when collapsed

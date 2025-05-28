@@ -21,7 +21,7 @@ class _LibraryNovelState extends State<LibraryNovel> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() {
-        Novel novel = libraryController.novels[widget.index];
+        NovelModel novel = libraryController.novels[widget.index];
         if (novel.source == "Novel Bin") {
           return NovelDetailsWidget(novel: novel);
         } else {

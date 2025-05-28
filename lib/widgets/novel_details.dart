@@ -8,7 +8,7 @@ import '../controllers/chapter_controller.dart';
 import '../pages/chapter_details.dart';
 
 class NovelDetailsWidget extends StatefulWidget {
-  final Novel novel;
+  final NovelModel novel;
   const NovelDetailsWidget({super.key, required this.novel});
 
   @override
@@ -16,11 +16,11 @@ class NovelDetailsWidget extends StatefulWidget {
 }
 
 class _NovelDetailsWidgetState extends State<NovelDetailsWidget> with SingleTickerProviderStateMixin{
-  late Novel novel;
+  late NovelModel novel;
   late TabController tabController;
   bool loading = false;
   bool ascending = false;
-  final ChapterController chapterController = Get.put(ChapterController());
+  // final ChapterController chapterController = Get.put(ChapterController());
 
   @override
   void initState() {
@@ -162,7 +162,7 @@ class _NovelDetailsWidgetState extends State<NovelDetailsWidget> with SingleTick
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    chapterController.downloadNovel(novel);
+                                    // chapterController.downloadNovel(novel);
                                   },
                                   child: const Icon(Icons.download),
                                 ),

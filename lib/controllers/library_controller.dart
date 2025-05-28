@@ -26,7 +26,7 @@ class LibraryController extends GetxController {
     fetchLibraryNovels();
   }
 
-  var novels = <Novel>[].obs;
+  var novels = <NovelModel>[].obs;
   var isLoading = true.obs;
 
   void fetchLibraryNovels() async {
@@ -39,7 +39,7 @@ class LibraryController extends GetxController {
     }
   }
 
-  void updateLibraryNovel(Novel updatedNovel) async {
+  void updateLibraryNovel(NovelModel updatedNovel) async {
     // Find the index of the existing novel with the same title
     int index = novels.indexWhere((novel) => novel.title == updatedNovel.title);
     if (index != -1) {
@@ -56,7 +56,7 @@ class LibraryController extends GetxController {
   }
 
 
-  bool novelInLibrary(Novel novel) {
+  bool novelInLibrary(NovelModel novel) {
     if (novels.any((existingNovel) => existingNovel.title == novel.title)) {
       return true;
     }
@@ -68,7 +68,7 @@ class LibraryController extends GetxController {
     fetchLibraryNovels();
   }
 
-  void addToLibrary(Novel novel) {
+  void addToLibrary(NovelModel novel) {
     // Check if a novel with the same title already exists in the library
     if (!novels.any((existingNovel) => existingNovel.title == novel.title)) {
       novels.add(novel);
@@ -79,7 +79,7 @@ class LibraryController extends GetxController {
     }
   }
 
-  void removeFromLibrary(Novel novel) {
+  void removeFromLibrary(NovelModel novel) {
     if(novels.any((existingNovel) => existingNovel.title == novel.title)) {
       novels.remove(novel);
       saveNovelsInLibrary();

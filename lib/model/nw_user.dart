@@ -14,7 +14,8 @@ class LocalUser {
         this.imageUrl,
         required this.verified,
         required this.userID,
-        this.email});
+        this.email}
+      );
 
   factory LocalUser.fromJson(Map<String, dynamic> json) {
     return LocalUser(

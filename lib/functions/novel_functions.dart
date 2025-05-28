@@ -19,7 +19,7 @@ class NovelFunction {
   }
 
 
-  Novel updateNovelWithChanges(Novel oldNovel, Novel newNovel) {
+  NovelModel updateNovelWithChanges(NovelModel oldNovel, NovelModel newNovel) {
     // Update fields only if they have new values in the newNovel
     return oldNovel.copyWith(
       title: newNovel.title != null && newNovel.title != oldNovel.title
@@ -90,12 +90,12 @@ class NovelFunction {
   }
 
 // Helper function to merge chapters
-  List<Chapter>? mergeChapters(List<Chapter>? oldChapters, List<Chapter>? newChapters) {
+  List<ChapterModel>? mergeChapters(List<ChapterModel>? oldChapters, List<ChapterModel>? newChapters) {
     if (newChapters == null) return oldChapters; // Return old list if no new chapters
     if (oldChapters == null) return newChapters; // Return new list if no old chapters
 
     // Map old chapters by their unique 'link' for fast lookup
-    final Map<String, Chapter> oldChapterMap = {
+    final Map<String, ChapterModel> oldChapterMap = {
       for (var chapter in oldChapters) chapter.link: chapter
     };
 
@@ -104,7 +104,7 @@ class NovelFunction {
         if (oldChapterMap.containsKey(newChapter.link)) {
           // Update existing chapter fields if new values are provided
           final existingChapter = oldChapterMap[newChapter.link]!;
-          oldChapterMap[newChapter.link] = Chapter(
+          oldChapterMap[newChapter.link] = ChapterModel(
             link: existingChapter.link, // Link remains constant
             number: existingChapter.number, // Number remains constant
             title: newChapter.title ?? existingChapter.title,

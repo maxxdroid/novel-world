@@ -15,5 +15,4 @@ class $Chapter {
   late int number;
   late String? book;
   late bool downloaded;
-
 }

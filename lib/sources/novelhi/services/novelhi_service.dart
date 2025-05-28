@@ -25,8 +25,8 @@ class NovelHiService {
     'Upgrade-Insecure-Requests': '1',
   };
   
-  Future<List<Novel>> getNovels (int index) async {
-    List<Novel> getNovels = [];
+  Future<List<NovelModel>> getNovels (int index) async {
+    List<NovelModel> getNovels = [];
     
     try {
       
@@ -54,14 +54,31 @@ class NovelHiService {
             }
           }
 
-          Novel newNovel = Novel(
-              "${url}s/${title
-                  .replaceAll(" ", "-")
-                  .replaceAll("'", "")
-                  .replaceAll(":", "")}",
-            novel["bookName"],
-            novel["picUrl"],
-            novel["authorName"],
+          String link = """${url}s/${title
+              .replaceAll(" ", "-")
+              .replaceAll("'", "")
+              .replaceAll(":", "")}""";
+
+          // Novel newNovel = Novel(
+          //     "${url}s/${title
+          //         .replaceAll(" ", "-")
+          //         .replaceAll("'", "")
+          //         .replaceAll(":", "")}",
+          //   novel["bookName"],
+          //   novel["picUrl"],
+          //   novel["authorName"],
+          //   source: "Novel Hi",
+          //   status: novel["bookStatus"] == '0' ? "completed" : "ongoing",
+          //   description: desc.replaceAll("<br>", "\n"),
+          //   genres: genreList,
+          //   yearOfPublication: novel[""]
+          // );
+
+          NovelModel newNovel = NovelModel(
+            title: novel["bookName"],
+            imgUrl: novel["picUrl"],
+            author: novel["authorName"],
+            link: link,
             source: "Novel Hi",
             status: novel["bookStatus"] == '0' ? "completed" : "ongoing",
             description: desc.replaceAll("<br>", "\n"),
@@ -80,7 +97,7 @@ class NovelHiService {
     return getNovels;
   }
 
-  Future<Chapter> getChapter(Chapter chapter) async {
+  Future<ChapterModel> getChapter(ChapterModel chapter) async {
     try {
       final response = await http.get(Uri.parse(chapter.link), headers: headers);
 
@@ -108,7 +125,7 @@ class NovelHiService {
     return chapter;
   }
 
-  Future<Novel> getChapters (Novel novel) async {
+  Future<NovelModel> getChapters (NovelModel novel) async {
     List<Chapter> chapters = [];
 
     String url = novelFunction.getNovelHiUrl(novel.link ?? "");
@@ -164,7 +181,8 @@ class NovelHiService {
         print(e);
       }
     }
-    novel.chapters = RealmList<Chapter>.new(chapters);
+
+    // novel.chapters = RealmList<Chapter>.new(chapters);
 
     return novel;
   }

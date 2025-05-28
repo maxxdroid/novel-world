@@ -10,7 +10,7 @@ import '../../../controllers/library_controller.dart';
 import '../../../model/realm_novel.dart';
 
 class NovelHiNovelDetails extends StatefulWidget {
-  final Novel novel;
+  final NovelModel novel;
   const NovelHiNovelDetails({super.key, required this.novel});
 
   @override
@@ -24,7 +24,7 @@ class _NovelHiNovelDetailsState extends State<NovelHiNovelDetails> with SingleTi
   bool ascending = false; // For toggling sorting
   bool inLibrary = false;
   Novel? updatedNovel;
-  late Future<Novel?> novel;
+  late Future<NovelModel?> novel;
   late Color color;
   final NovelHiService novelHiService = NovelHiService();
   final LibraryController libraryController = Get.put(LibraryController());
@@ -50,7 +50,7 @@ class _NovelHiNovelDetailsState extends State<NovelHiNovelDetails> with SingleTi
         children: [
           SizedBox(
             height: height,
-            child: FutureBuilder<Novel?>(
+            child: FutureBuilder<NovelModel?>(
               initialData: widget.novel,
               future: novel,
               builder: (context, snapshot) {
@@ -265,7 +265,7 @@ class _NovelHiNovelDetailsState extends State<NovelHiNovelDetails> with SingleTi
     );
   }
 
-  Widget description (double width, double height, Novel newNovel) {
+  Widget description (double width, double height, NovelModel newNovel) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       width: width,// Fixed height when collapsed

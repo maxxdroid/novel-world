@@ -4,7 +4,7 @@ import 'package:novel_world/model/novel.dart';
 import '../model/realm_novel.dart';
 
 class NovelDescription extends StatelessWidget {
-  final Novel novel;
+  final NovelModel novel;
   final bool inLibrary;
   final VoidCallback onTap;
   const NovelDescription({super.key, required this.novel, required this.inLibrary, required this.onTap});

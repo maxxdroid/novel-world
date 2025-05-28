@@ -10,8 +10,8 @@ import '../../../model/realm_novel.dart';
 
 
 class NovelHiChapter extends StatefulWidget {
-  final Chapter chapter;
-  final Novel novel;
+  final ChapterModel chapter;
+  final NovelModel novel;
   const NovelHiChapter({super.key, required this.chapter, required this.novel});
 
   @override
@@ -19,7 +19,7 @@ class NovelHiChapter extends StatefulWidget {
 }
 
 class _NovelHiChapterState extends State<NovelHiChapter> {
-  late Future<Chapter> chapter;
+  late Future<ChapterModel> chapter;
   final NovelHiService novelHiService = NovelHiService();
   bool _isAppBarVisible = false;
   late String next;
@@ -33,7 +33,7 @@ class _NovelHiChapterState extends State<NovelHiChapter> {
     loadChapter(widget.chapter); // Load the initial chapter
   }
 
-  void loadChapter(Chapter chap) {
+  void loadChapter(ChapterModel chap) {
     // Initialize chapter based on the current widget.chapter
     chapter = novelHiService.getChapter(chap);
     chapter.then((chapterData) {
@@ -67,7 +67,7 @@ class _NovelHiChapterState extends State<NovelHiChapter> {
           _onScroll(notification);
           return true;
         },
-        child: FutureBuilder<Chapter>(
+        child: FutureBuilder<ChapterModel>(
           future: chapter,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -96,7 +96,7 @@ class _NovelHiChapterState extends State<NovelHiChapter> {
     );
   }
 
-  Widget chapterCard (Chapter chapter, double width) {
+  Widget chapterCard (ChapterModel chapter, double width) {
     return SingleChildScrollView(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 60),
       child: Column(
@@ -136,9 +136,9 @@ class _NovelHiChapterState extends State<NovelHiChapter> {
             onPressed: () {
               if (widget.novel.chapters?[widget.chapter.number - 1] != null) {
                 setState(() {
-                  Chapter? prev = widget.novel.chapters?[widget.chapter.number-2];
+                  ChapterModel? prev = widget.novel.chapters?[widget.chapter.number-2];
                   if (kDebugMode) {
-                    print(prev?.toEJson());
+                    // print(prev?.toEJson());
                   }
                   if (prev != null) {
                     widget.chapter.link = prev.link;
@@ -154,9 +154,9 @@ class _NovelHiChapterState extends State<NovelHiChapter> {
             onPressed: () {
               if (widget.novel.chapters?[widget.chapter.number + 1] != null) {
                 setState(() {
-                  Chapter? next = widget.novel.chapters?[widget.chapter.number];
+                  ChapterModel? next = widget.novel.chapters?[widget.chapter.number];
                   if (kDebugMode) {
-                    print(next?.toEJson());
+                    // print(next?.toEJson());
                   }
                   if (next != null) {
                     widget.chapter.link = next.link;
