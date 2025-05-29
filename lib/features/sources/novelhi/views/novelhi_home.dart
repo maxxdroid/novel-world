@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:novel_world/sources/novelhi/views/novelhi_novel_details.dart';
-import 'package:novel_world/sources/novelhi/services/novelhi_service.dart';
 
-import '../../../functions/caching_service.dart';
-import '../../../loading_states/loading_home.dart';
-import '../../../model/novel.dart';
-import '../../../model/realm_novel.dart';
+import '../../../../functions/caching_service.dart';
+import '../../../../model/novel.dart';
+import '../../../../shared/widgets/loading_states/loading_home.dart';
 import '../../novelbin/services/novelbin_service.dart';
+import '../services/novelhi_service.dart';
+import 'novelhi_novel_details.dart';
 
 class NovelHiHome extends StatefulWidget {
   const NovelHiHome({super.key});

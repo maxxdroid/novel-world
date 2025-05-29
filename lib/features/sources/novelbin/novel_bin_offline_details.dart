@@ -9,11 +9,9 @@ import 'package:novel_world/functions/novel_functions.dart';
 import 'package:novel_world/model/novel.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import '../../controllers/chapter_controller.dart';
-import '../../controllers/library_controller.dart';
-import '../../model/realm_novel.dart';
+import '../../../controllers/library_controller.dart';
+import '../../../pages/chapter_details.dart';
 import 'services/novelbin_service.dart';
-import '../../pages/chapter_details.dart';
 
 class NovelDetails extends StatefulWidget {
   final NovelModel novel;

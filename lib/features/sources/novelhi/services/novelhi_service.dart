@@ -7,10 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:novel_world/functions/novel_functions.dart';
 import 'package:novel_world/model/chapter.dart';
 import 'package:novel_world/model/novel.dart';
-import 'package:realm/realm.dart';
-
-import '../../../model/realm_chapter.dart';
-import '../../../model/realm_novel.dart';
 
 class NovelHiService {
   final NovelFunction novelFunction = NovelFunction();
@@ -126,7 +122,7 @@ class NovelHiService {
   }
 
   Future<NovelModel> getChapters (NovelModel novel) async {
-    List<Chapter> chapters = [];
+    List<ChapterModel> chapters = [];
 
     String url = novelFunction.getNovelHiUrl(novel.link ?? "");
 
@@ -165,14 +161,23 @@ class NovelHiService {
               print("Extracted Number: $number");
             }
 
-            Chapter chapter =Chapter(
-              "${novel.link}/$number",
-              chapterText,
-              false,
-              number ?? 0,
-              false
+            // Chapter chapter =Chapter(
+            //   "${novel.link}/$number",
+            //   chapterText,
+            //   false,
+            //   number ?? 0,
+            //   false
+            // );
+
+            chapters.add(
+                ChapterModel(
+                    number: number ?? 0,
+                    title: "Chapter $number",
+                    link: "${novel.link}/$number",
+                    read: false
+                )
             );
-            chapters.add(chapter);
+
           }
         }
       }
@@ -183,12 +188,13 @@ class NovelHiService {
     }
 
     // novel.chapters = RealmList<Chapter>.new(chapters);
+    novel.chapters = chapters;
 
     return novel;
   }
 
-  Future<List<Novel>> searchNovels (String keyWords, int page) async {
-    List<Novel> getNovels = [];
+  Future<List<NovelModel>> searchNovels (String keyWords, int page) async {
+    List<NovelModel> getNovels = [];
 
     try {
 
@@ -216,11 +222,11 @@ class NovelHiService {
             }
           }
 
-          Novel newNovel = Novel(
-            "${url}s/${title.replaceAll(" ", "-")}", // link (positional)
-            novel["bookName"], // title (positional)
-            novel["picUrl"], // imgUrl (positional)
-            novel["authorName"], // author (positional)
+          NovelModel newNovel = NovelModel(
+            link: "${url}s/${title.replaceAll(" ", "-")}", // link (positional)
+            title : novel["bookName"], // title (positional)
+            imgUrl : novel["picUrl"], // imgUrl (positional)
+            author : novel["authorName"], // author (positional)
             status: novel["bookStatus"] == '0' ? "completed" : "ongoing",
             description: desc.replaceAll("<br>", "\n"),
             genres: genreList,

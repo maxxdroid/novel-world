@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:novel_world/controllers/library_controller.dart';
 import 'package:novel_world/model/novel.dart';
-import 'package:novel_world/widgets/novel_details.dart';
 
-import '../sources/novelhi/views/novel_hi_offline_details.dart';
+import '../features/sources/novelhi/views/novel_hi_offline_details.dart';
+import '../shared/widgets/novel_details.dart';
 
 class LibraryNovel extends StatefulWidget {
   final int index;

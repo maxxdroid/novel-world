@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:novel_world/features/sources/novelbin/services/novelbin_service.dart';
 import 'package:novel_world/functions/caching_service.dart';
-import 'package:novel_world/loading_states/loading_home.dart';
 import 'package:novel_world/pages/novelbin_deails.dart';
-import 'package:novel_world/sources/novelbin/services/novelbin_service.dart';
 
-import '../../model/novel.dart';
-import '../../model/realm_novel.dart';
+import '../../../model/novel.dart';
+import '../../../shared/widgets/loading_states/loading_home.dart';
 
 class NovelBinHome extends StatefulWidget {
   const NovelBinHome({super.key});

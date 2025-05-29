@@ -6,9 +6,6 @@ import 'package:novel_world/model/chapter.dart';
 import 'package:novel_world/model/novel.dart';
 import 'package:realm/realm.dart';
 
-import '../../../model/realm_chapter.dart';
-import '../../../model/realm_novel.dart';
-
 class NovelBinService {
 
   static const String url = "https://novelbin.me/";
@@ -24,8 +21,8 @@ class NovelBinService {
     'Upgrade-Insecure-Requests': '1',
   };
 
-  Future<List<Novel>> getHotNovels () async {
-    List<Novel> hotNovels = [];
+  Future<List<NovelModel>> getHotNovels () async {
+    List<NovelModel> hotNovels = [];
 
     try {
       // Make the HTTP request
@@ -46,11 +43,11 @@ class NovelBinService {
             imageUrl = novel.querySelector('img')?.attributes['src'] ?? '';
           }
 
-          Novel hotNovel = Novel(
-              link,
-              title,
-              imageUrl,
-              "",
+          NovelModel hotNovel = NovelModel(
+              link : link,
+              title : title,
+              imgUrl :imageUrl,
+              // : "",
               source: "Novel Bin"
           );
 

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:get/get_navigation/src/snackbar/snackbar_controller.dart';
-import 'package:novel_world/sources/novelbin/services/novelbin_service.dart';
 
+import '../features/sources/novelbin/services/novelbin_service.dart';
 import '../model/chapter.dart';
 import '../model/novel.dart';
 

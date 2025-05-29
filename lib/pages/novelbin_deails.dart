@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:html/parser.dart';
 import 'package:novel_world/model/novel.dart';
-import 'package:novel_world/sources/novelbin/services/novelbin_service.dart';
 import 'package:novel_world/pages/chapter_details.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../controllers/library_controller.dart';
+import '../features/sources/novelbin/services/novelbin_service.dart';
 
 class NovelBinDetails extends StatefulWidget {
   final NovelModel novel;

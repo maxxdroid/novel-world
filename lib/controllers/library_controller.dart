@@ -4,7 +4,8 @@ import 'package:novel_world/functions/caching_service.dart';
 import 'package:novel_world/functions/novel_functions.dart';
 import 'package:novel_world/model/novel.dart';
 
-import '../tabs/home_tabs.dart';
+import '../features/Home/views/tabs/home_tabs.dart';
+
 
 class LibraryController extends GetxController {
   final GlobalKey<HomeTabsState> homeTabsKey = GlobalKey<HomeTabsState>();

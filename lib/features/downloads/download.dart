@@ -1,8 +1,8 @@
 import 'package:realm/realm.dart';
 
-import '../model/realm_novel.dart';
+import '../../model/realm_chapter.dart';
+import '../../model/realm_novel.dart';
 
-import '../model/realm_chapter.dart';
 
 class DownloadService {
 

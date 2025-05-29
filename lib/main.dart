@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:novel_world/landing/landing.dart';
+
+import 'features/landing/landing.dart';
 
 void main() {
   runApp(const MyApp());

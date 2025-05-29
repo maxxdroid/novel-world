@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:novel_world/model/novel.dart';
-import 'package:novel_world/sources/novelhi/views/novel_hi_chapter.dart';
-import 'package:novel_world/sources/novelhi/services/novelhi_service.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../../controllers/library_controller.dart';
-import '../../../model/realm_novel.dart';
+import '../../../../controllers/library_controller.dart';
+import '../services/novelhi_service.dart';
+import 'novel_hi_chapter.dart';
 
 class NovelHiNovelDetails extends StatefulWidget {
   final NovelModel novel;
@@ -23,7 +22,7 @@ class _NovelHiNovelDetailsState extends State<NovelHiNovelDetails> with SingleTi
   bool isDescriptionExpanded = false; // For toggling description
   bool ascending = false; // For toggling sorting
   bool inLibrary = false;
-  Novel? updatedNovel;
+  NovelModel? updatedNovel;
   late Future<NovelModel?> novel;
   late Color color;
   final NovelHiService novelHiService = NovelHiService();

@@ -3,15 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:novel_world/functions/novel_functions.dart';
 import 'package:novel_world/model/novel.dart';
-import 'package:novel_world/sources/novelhi/views/novel_hi_chapter.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../../controllers/chapter_controller.dart';
-import '../../../controllers/library_controller.dart';
-import '../../../model/realm_novel.dart';
-import '../../../pages/chapter_details.dart';
+import '../../../../controllers/library_controller.dart';
+import '../../../../pages/chapter_details.dart';
 import '../services/novelhi_service.dart';
+import 'novel_hi_chapter.dart';
 
 class NovelHiOffline extends StatefulWidget {
   final NovelModel novel;

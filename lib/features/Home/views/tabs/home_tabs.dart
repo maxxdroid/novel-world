@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:novel_world/tabs/library_tab.dart';
-import 'package:novel_world/tabs/source_tab.dart';
+import 'package:novel_world/features/Home/views/tabs/source_tab.dart';
+
+import 'library_tab.dart';
 
 class HomeTabs extends StatefulWidget {
   const HomeTabs({Key? key}) : super(key: key);
